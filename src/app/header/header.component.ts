@@ -5,4 +5,15 @@ import { Component } from '@angular/core';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
 })
-export class HeaderComponent {}
+export class HeaderComponent {
+  title: string = 'Header Component';
+  inputValue: string = 'Custom Value';
+
+  sayHelloWorld() {
+    console.log('Hello World');
+  }
+
+  printInputValue(event: Event) {
+    console.log((<HTMLInputElement>event.target).value);
+  }
+}
