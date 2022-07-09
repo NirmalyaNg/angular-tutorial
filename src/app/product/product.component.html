@@ -1,0 +1,12 @@
+<div class="card mt-2">
+  <div class="card-body">
+    <h5 class="card-title">{{ productName }}</h5>
+    <p class="card-text">{{ productDescription }}.</p>
+    <p>
+      Price: <b>${{ productPrice }}</b>
+    </p>
+    <button class="btn btn-primary mt-2" (click)="handleClick()">
+      Select Product
+    </button>
+  </div>
+</div>
