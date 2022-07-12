@@ -1,6 +1,12 @@
-<app-header></app-header>
-<h1>Hello World</h1>
-<app-main></app-main>
-<app-footer></app-footer>
-<!-- <div class="app-footer"></div> -->
-<!-- <div app-footer></div> -->
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-md-6 offset-md-3">
+      <app-new-post (postAdd)="addPost($event)"></app-new-post>
+    </div>
+  </div>
+  <div class="row mt-2">
+    <div class="col-md-6 offset-md-3">
+      <app-post-list [posts]="listOfPosts"></app-post-list>
+    </div>
+  </div>
+</div>

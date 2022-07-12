@@ -6,5 +6,22 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'angular-introduction';
+  public listOfPosts = [
+    {
+      id: 'p1',
+      title: 'Post 1',
+      description: 'This is Post 1',
+      author: 'Nirmalya Ganguly',
+    },
+    {
+      id: 'p2',
+      title: 'Post 1',
+      description: 'This is Post 2',
+      author: 'Sampriti Ganguly',
+    },
+  ];
+
+  public addPost(newPost: any) {
+    this.listOfPosts.push(newPost);
+  }
 }
