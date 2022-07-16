@@ -1,19 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css'],
+  // encapsulation: ViewEncapsulation.Emulated
+  // encapsulation: ViewEncapsulation.None
+  // encapsulation: ViewEncapsulation.ShadowDom
 })
-export class HeaderComponent {
-  title: string = 'Header Component';
-  inputValue: string = 'Custom Value';
+export class HeaderComponent implements OnInit {
+  constructor() {}
 
-  sayHelloWorld() {
-    console.log('Hello World');
-  }
-
-  printInputValue(event: Event) {
-    console.log((<HTMLInputElement>event.target).value);
-  }
+  ngOnInit(): void {}
 }
