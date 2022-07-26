@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  parentDummyData: string = 'This is for parent component';
   title = 'angular-introduction';
 }
