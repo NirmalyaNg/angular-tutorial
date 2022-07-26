@@ -1,0 +1,4 @@
+<h1 #heading>Parent Component</h1>
+<button (click)="handleRemoveChild()">Remove Child</button>
+<app-child *ngIf="showChild"></app-child>
+<ng-content></ng-content>
