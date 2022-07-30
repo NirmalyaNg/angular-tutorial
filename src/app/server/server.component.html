@@ -1,0 +1,21 @@
+<div
+  class="card mt-3"
+  [ngClass]="{
+    online: status === 'online',
+    offline: status === 'offline',
+    disabled: status === 'disabled'
+  }"
+>
+  <div class="card-body">
+    <h5 class="card-title">{{ name }}</h5>
+    <p class="card-text">
+      Server status is '<b
+        [ngStyle]="{
+          color: getColor()
+        }"
+        >{{ status }}</b
+      >'
+    </p>
+    <button class="btn btn-danger" (click)="handleDelete()">Delete</button>
+  </div>
+</div>

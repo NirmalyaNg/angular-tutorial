@@ -1,6 +1,18 @@
-<app-header></app-header>
-<h1>Hello World</h1>
-<app-main></app-main>
-<app-footer></app-footer>
-<!-- <div class="app-footer"></div> -->
-<!-- <div app-footer></div> -->
+<div class="container">
+  <div class="row mt-2">
+    <div class="col-sm-12 col-lg-6 offset-lg-3">
+      <app-new-server (serverAdded)="addServer($event)"></app-new-server>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-sm-12 col-lg-6 offset-lg-3">
+      <app-server
+        *ngFor="let server of servers"
+        [id]="server.id"
+        [name]="server.name"
+        [status]="server.status"
+        (serverDeleted)="deleteServer($event)"
+      ></app-server>
+    </div>
+  </div>
+</div>

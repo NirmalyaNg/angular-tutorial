@@ -1,0 +1,11 @@
+.online {
+  border: 2px solid green;
+}
+
+.offline {
+  border: 2px solid red;
+}
+
+.disabled {
+  border: 2px solid gray;
+}
