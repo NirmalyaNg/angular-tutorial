@@ -1,1 +1,14 @@
-<h1>Hello World</h1>
+<h1
+  [appColorChange]="'lightblue'"
+  [mouseEnterColor]="'tomato'"
+  [mouseLeaveColor]="'blue'"
+>
+  Hello World
+</h1>
+<p *ngIf="showParagraph">I will be displayed occasionally</p>
+<!-- <ng-template [ngIf]="showParagraph">
+  <p>I will be displayed occasionally</p>
+</ng-template> -->
+<!-- ng-template is a directive provided by Angular which has an element selector -->
+<!-- ngIf is a property of the directive which is set from outside using [ngIf] property binding -->
+<p *appCustomNgIf="true">Custom NgIf</p>
