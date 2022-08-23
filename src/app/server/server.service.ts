@@ -7,7 +7,8 @@ export class ServerService {
   ];
 
   public getServers() {
-    return this.servers.slice();
+    // return this.servers.slice();
+    return this.servers;
   }
 
   public addServer(name: string, status: string) {
@@ -16,5 +17,10 @@ export class ServerService {
       name: name,
       status: status,
     });
+  }
+
+  public changeServerStatus(id: string, newStatus: string) {
+    const srv = this.servers.find((server) => server.id === id);
+    srv.status = newStatus;
   }
 }

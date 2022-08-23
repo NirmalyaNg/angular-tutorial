@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ServerService } from './server.service';
 
 @Component({
   selector: 'app-server',
@@ -10,7 +11,19 @@ export class ServerComponent implements OnInit {
   @Input() serverName: string;
   @Input() serverStatus: string;
 
-  constructor() {}
+  constructor(private serverService: ServerService) {}
 
   ngOnInit(): void {}
+
+  handleOnlineStatusChange() {
+    this.serverService.changeServerStatus(this.serverId, 'online');
+  }
+
+  handleOfflineStatusChange() {
+    this.serverService.changeServerStatus(this.serverId, 'offline');
+  }
+
+  handleDisabledStatusChange() {
+    this.serverService.changeServerStatus(this.serverId, 'disabled');
+  }
 }

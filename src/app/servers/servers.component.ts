@@ -28,6 +28,7 @@ export class ServersComponent implements OnInit {
   */
 
   constructor(serverService: ServerService) {
+    //  here this.serverService contains the object of ServerService class
     this.serverService = serverService;
   }
 
