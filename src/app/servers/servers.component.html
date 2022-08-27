@@ -1,11 +1,17 @@
 <div class="row">
   <div class="col-sm-12">
-    <app-server
+    <!-- <app-server
       *ngFor="let server of listOfServers"
       [serverName]="server.name"
       [serverId]="server.id"
       [serverStatus]="server.status"
       (testEvent)="testMethodParent()"
+    ></app-server> -->
+    <app-server
+      *ngFor="let server of listOfServers"
+      [serverName]="server.name"
+      [serverId]="server.id"
+      [serverStatus]="server.status"
     ></app-server>
   </div>
 </div>

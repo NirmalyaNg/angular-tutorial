@@ -3,7 +3,7 @@ import { Server } from '../models/server.model';
 
 export class ServerService {
   public serviceEvent = new EventEmitter<void>();
-  public serversChanged = new EventEmitter<Server[]>();
+  public serversDataModified = new EventEmitter<Server[]>();
 
   public servers: Server[] = [
     { id: 's1', name: 'Server 1', status: 'online' },
@@ -20,7 +20,7 @@ export class ServerService {
       name: name,
       status: status,
     });
-    this.serversChanged.emit(this.servers.slice());
+    this.serversDataModified.emit(this.servers.slice());
   }
 
   public changeServerStatus(id: string, newStatus: string) {
@@ -33,6 +33,6 @@ export class ServerService {
     this.servers = this.servers.filter((server) => {
       return server.id !== id;
     });
-    this.serversChanged.emit(this.servers.slice());
+    this.serversDataModified.emit(this.servers.slice());
   }
 }

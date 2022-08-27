@@ -14,9 +14,9 @@ export class AppComponent implements OnInit {
     });
   }
 
-  onHandleEvent() {
-    console.log(
-      'Inside app executing due to event emitted in grandchild(server)'
-    );
-  }
+  // onHandleEvent() {
+  //   console.log(
+  //     'Inside app executing due to event emitted in grandchild(server)'
+  //   );
+  // }
 }

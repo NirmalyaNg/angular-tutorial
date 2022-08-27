@@ -10,7 +10,7 @@ export class ServerComponent implements OnInit {
   @Input() serverId: string;
   @Input() serverName: string;
   @Input() serverStatus: string;
-  @Output() testEvent = new EventEmitter<void>();
+  // @Output() testEvent = new EventEmitter<void>();
 
   constructor(private serverService: ServerService) {}
 
@@ -28,9 +28,9 @@ export class ServerComponent implements OnInit {
     this.serverService.changeServerStatus(this.serverId, 'disabled');
   }
 
-  handleClick() {
-    this.testEvent.emit();
-  }
+  // handleClick() {
+  //   this.testEvent.emit();
+  // }
 
   handleClick2() {
     this.serverService.serviceEvent.emit();
