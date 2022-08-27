@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Server } from '../models/server.model';
 import { ServerService } from '../server/server.service';
 
@@ -11,6 +11,7 @@ import { ServerService } from '../server/server.service';
 export class ServersComponent implements OnInit {
   listOfServers: Server[] = [];
   serverService: ServerService; // This property stores an object of ServerService class
+  @Output() testEvent2 = new EventEmitter<void>();
 
   // In the constructor you mention which service object u need and angular will inject it for u
   /*
@@ -39,5 +40,18 @@ export class ServersComponent implements OnInit {
     // this.listOfServers = serverServiceObject.getServers(); !!!!!!! WRONG WAY OF USING A SERVICE !!!!!!!
     console.log('Called');
     this.listOfServers = this.serverService.getServers();
+
+    this.serverService.serviceEvent.subscribe(() => {
+      console.log('Subscription called in servers component');
+    });
+
+    this.serverService.serversChanged.subscribe((servers: Server[]) => {
+      this.listOfServers = servers;
+    });
+  }
+
+  testMethodParent() {
+    console.log('Executing due to child event inside parent');
+    this.testEvent2.emit();
   }
 }

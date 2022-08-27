@@ -12,7 +12,11 @@ export class NewServerComponent implements OnInit {
 
   constructor(private serverService: ServerService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.serverService.serviceEvent.subscribe(() => {
+      console.log('Subscription called in New Server Component');
+    });
+  }
 
   handleServerAdd() {
     const name = this.serverNameInput.nativeElement.value;

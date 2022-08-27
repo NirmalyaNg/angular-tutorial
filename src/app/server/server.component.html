@@ -1,5 +1,10 @@
 <div class="card my-2">
-  <div class="card-header">{{ serverName }}</div>
+  <div class="card-header">
+    {{ serverName }}
+    <button class="btn btn-sm btn-danger ms-3" (click)="handleDelete()">
+      Delete
+    </button>
+  </div>
   <div class="card-body">
     <p class="card-title">Server Status is {{ serverStatus }}</p>
     <button class="btn btn-success me-2" (click)="handleOnlineStatusChange()">
@@ -8,8 +13,12 @@
     <button class="btn btn-warning me-2" (click)="handleOfflineStatusChange()">
       Change to 'offline'
     </button>
-    <button class="btn btn-danger" (click)="handleDisabledStatusChange()">
+    <button class="btn btn-danger me-2" (click)="handleDisabledStatusChange()">
       Change to 'disabled'
+    </button>
+    <!-- <button class="btn btn-primary" (click)="handleClick()">Emit</button> -->
+    <button class="btn btn-info mt-2" (click)="handleClick2()">
+      Emit (Service)
     </button>
   </div>
 </div>
