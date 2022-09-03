@@ -1,0 +1,13 @@
+<div class="card mb-2 bg-light shadow-sm">
+  <img [src]="product.imageUrl" class="card-img-top my-2" alt="..." />
+  <div class="card-body">
+    <h5 class="card-title">{{ product.title }}</h5>
+    <p class="card-text">
+      {{ product.description }}
+    </p>
+    <h4 class="card-text">₹{{ product.price }}</h4>
+    <button class="btn btn-primary" (click)="handleAddToCart()">
+      Add to Cart
+    </button>
+  </div>
+</div>

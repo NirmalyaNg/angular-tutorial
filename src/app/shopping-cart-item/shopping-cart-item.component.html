@@ -1,0 +1,28 @@
+<div class="card mb-3 p-2">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img [src]="item.imageUrl" class="img-fluid rounded-start" alt="..." />
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ item.title }}
+          <span
+            class="text-danger ms-3"
+            style="cursor: pointer"
+            (click)="handleRemoveFromCart()"
+            ><i class="fa-solid fa-trash"></i
+          ></span>
+        </h5>
+        <p class="card-text">
+          <span
+            ><b>x {{ item.quantity }}</b></span
+          >
+          <span class="price"
+            >Total Price : <b>₹{{ +item.price * item.quantity }}</b></span
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

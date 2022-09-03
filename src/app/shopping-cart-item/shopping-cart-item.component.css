@@ -1,0 +1,14 @@
+img {
+  width: 100px;
+  height: 120px;
+}
+
+.card-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.price {
+  font-size: 1.2rem;
+}
