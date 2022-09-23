@@ -1,0 +1,12 @@
+.error-message {
+  color: red;
+}
+
+.valid {
+  color: green;
+  text-decoration: line-through;
+}
+
+.invalid {
+  color: red;
+}

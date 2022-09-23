@@ -1,0 +1,223 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-3">
+      <div class="card-body">
+        <h3 class="text-center">Signup Form</h3>
+        <form novalidate #form="ngForm" (ngSubmit)="handleFormSubmit()">
+          <div class="form-group mt-2">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              class="form-control"
+              #username="ngModel"
+              ngModel
+              name="username"
+              required
+              minlength="6"
+            />
+          </div>
+
+          <p class="error-message" *ngIf="username.invalid && username.touched">
+            <span *ngIf="username.errors.required">Username is required</span>
+            <span *ngIf="username.errors.minlength"
+              >Username should contain minimum 6 characters</span
+            >
+          </p>
+          <button
+            class="btn btn-sm btn-warning mt-2"
+            type="button"
+            (click)="handleUsernameSuggest()"
+          >
+            Suggest Username
+          </button>
+          <div class="form-group mt-2">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              ngModel
+              name="email"
+              #email="ngModel"
+              required
+              email
+            />
+          </div>
+          <p class="error-message" *ngIf="email.invalid && email.touched">
+            <span *ngIf="email.errors.required">Email is required</span>
+            <span *ngIf="email.errors.email">Please enter a valid email</span>
+          </p>
+          <div class="form-group mt-2">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              ngModel
+              #password="ngModel"
+              name="password"
+              required
+              minlength="6"
+            />
+          </div>
+          <p class="error-message" *ngIf="password.invalid && password.touched">
+            <span *ngIf="password.errors.required">Password is required</span>
+            <span *ngIf="password.errors.minlength"
+              >Password should contain minimum 6 characters</span
+            >
+          </p>
+          <div class="form-group mt-2">
+            <label>Gender</label>
+            <div class="form-check" *ngFor="let gender of genders">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="gender"
+                [ngModel]="selectedGender"
+                [value]="gender"
+                [id]="gender"
+                required
+              />
+              <label class="form-check-label" [for]="gender">
+                {{ gender }}
+              </label>
+            </div>
+          </div>
+
+          <div ngModelGroup="address" #address="ngModelGroup">
+            <div class="form-group mt-2">
+              <label for="city">City</label>
+              <select
+                class="form-select"
+                id="city"
+                [ngModel]="selectedCity"
+                name="city"
+                required
+                #city="ngModel"
+              >
+                <option value="Kolkata">Kolkata</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Pune">Pune</option>
+              </select>
+            </div>
+            <p class="error-message" *ngIf="city.invalid && city.touched">
+              <span *ngIf="city.errors.required">City is required</span>
+            </p>
+            <div class="form-group mt-2">
+              <label for="state">State</label>
+              <select
+                class="form-select"
+                id="state"
+                [ngModel]="selectedState"
+                name="state"
+                required
+                #state="ngModel"
+              >
+                <option value="West Bengal">West Bengal</option>
+                <option value="Maharashtra">Maharashtra</option>
+                <option value="Chennai">Chennai</option>
+              </select>
+            </div>
+            <p class="error-message" *ngIf="state.invalid && state.touched">
+              <span *ngIf="state.errors.required">State is required</span>
+            </p>
+          </div>
+          <p class="error-message" *ngIf="address.invalid && address.touched">
+            Address is invalid
+          </p>
+          <button
+            type="submit"
+            class="btn btn-success mt-2"
+            [disabled]="form.invalid"
+          >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary mt-2 ms-2"
+            (click)="handleReset()"
+          >
+            Reset
+          </button>
+          <button
+            type="button"
+            class="btn btn-warning ms-2 mt-2"
+            (click)="populateDefault()"
+          >
+            Set Default
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4" *ngIf="signupForm">
+    <div class="card p-3">
+      <div class="card-body">
+        <h3 class="text-center">Validations</h3>
+        <div class="validations">
+          <ul>
+            <li
+              [ngClass]="{
+                valid: isControlValid('username'),
+                invalid: !isControlValid('username')
+              }"
+            >
+              Username
+            </li>
+            <li
+              [ngClass]="{
+                valid: isControlValid('email'),
+                invalid: !isControlValid('email')
+              }"
+            >
+              Email
+            </li>
+            <li
+              [ngClass]="{
+                valid: isControlValid('password'),
+                invalid: !isControlValid('password')
+              }"
+            >
+              Password
+            </li>
+            <li
+              [ngClass]="{
+                valid: isControlValid('gender'),
+                invalid: !isControlValid('gender')
+              }"
+            >
+              Gender
+            </li>
+            <li
+              [ngClass]="{
+                valid: isControlValid('address'),
+                invalid: !isControlValid('address')
+              }"
+            >
+              Address
+              <ul>
+                <li
+                  [ngClass]="{
+                    valid: isControlValid('address.city'),
+                    invalid: !isControlValid('address.city')
+                  }"
+                >
+                  City
+                </li>
+                <li
+                  [ngClass]="{
+                    valid: isControlValid('address.state'),
+                    invalid: !isControlValid('address.state')
+                  }"
+                >
+                  State
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
