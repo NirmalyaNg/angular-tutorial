@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-6">
+    <!-- <button class="btn btn-warning mt-2" routerLink="home">Go to Home</button> -->
+    <button class="btn btn-warning mt-2" (click)="handleClick()">
+      Go to Home
+    </button>
+    <ul class="list-group mt-3">
+      <li
+        class="list-group-item"
+        style="cursor: pointer"
+        *ngFor="let user of users"
+        (click)="handleUserNavigation(user.id)"
+      >
+        Name: {{ user.name }} Age: {{ user.age }}
+      </li>
+    </ul>
+  </div>
+</div>
