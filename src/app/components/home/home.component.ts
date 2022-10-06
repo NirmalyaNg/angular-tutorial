@@ -13,6 +13,6 @@ export class HomeComponent implements OnInit {
 
   handleClick() {
     console.log('Going to /posts');
-    this.router.navigate(['/posts']);
+    this.router.navigate(['posts']);
   }
 }

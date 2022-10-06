@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user.model';
 import { UsersService } from 'src/app/services/users.service';
 
@@ -11,12 +11,25 @@ import { UsersService } from 'src/app/services/users.service';
 export class UserComponent implements OnInit {
   user: User = null;
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private usersService: UsersService
   ) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
+    console.log('ngOninit running');
+    const id = this.route.snapshot.params['userId'];
     this.user = this.usersService.getUserById(id);
+
+    this.route.params.subscribe((p) => {
+      console.log(p);
+      console.log('Inside subscription');
+      const id = p['userId'];
+      this.user = this.usersService.getUserById(id);
+    });
+  }
+
+  handleClick() {
+    this.router.navigate(['users-list', 'u3']);
   }
 }

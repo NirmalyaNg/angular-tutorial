@@ -9,6 +9,13 @@ import { HeaderComponent } from './components/header/header.component';
 import { Routes, RouterModule } from '@angular/router';
 import { UsersService } from './services/users.service';
 import { UserComponent } from './components/user/user.component';
+import { UserAddComponent } from './components/user-add/user-add.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
+
+// 'users-list',
+// 'users-list/:userId',
+// 'users-list/add',
+// 'users-list/:userId/edit'
 
 const routes: Routes = [
   {
@@ -18,11 +25,26 @@ const routes: Routes = [
   {
     path: 'users-list',
     component: UsersListComponent,
+    children: [
+      {
+        path: 'add',
+        component: UserAddComponent,
+      },
+      {
+        path: ':userId',
+        component: UserComponent,
+      },
+
+      {
+        path: ':userId/edit',
+        component: UserEditComponent,
+      },
+    ],
   },
-  {
-    path: 'users-list/:id',
-    component: UserComponent,
-  },
+  // {
+  //   path: 'users-list/:userId',
+  //   component: UserComponent
+  // }
   {
     path: 'posts',
     component: PostsComponent,
