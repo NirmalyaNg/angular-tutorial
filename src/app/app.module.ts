@@ -12,6 +12,7 @@ import { UsersService } from './services/users.service';
 import { UserComponent } from './components/user/user.component';
 import { UserAddComponent } from './components/user-add/user-add.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
+import { ErrorNotFoundComponent } from './components/error-not-found/error-not-found.component';
 
 // 'users-list',
 // 'users-list/:userId',
@@ -19,6 +20,12 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 // 'users-list/:userId/edit'
 
 const routes: Routes = [
+  {
+    path: '',
+    // component: HomeComponent,
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
   {
     path: 'home',
     component: HomeComponent,
@@ -50,6 +57,10 @@ const routes: Routes = [
     path: 'posts',
     component: PostsComponent,
   },
+  {
+    path: '**',
+    component: ErrorNotFoundComponent,
+  },
 ];
 
 @NgModule({
@@ -62,6 +73,7 @@ const routes: Routes = [
     UserComponent,
     UserAddComponent,
     UserEditComponent,
+    ErrorNotFoundComponent,
   ],
   imports: [BrowserModule, RouterModule.forRoot(routes), FormsModule],
   providers: [UsersService],

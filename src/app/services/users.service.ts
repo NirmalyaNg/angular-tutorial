@@ -45,4 +45,13 @@ export class UsersService {
     });
     this.usersChanged.emit(this.users.slice());
   }
+
+  public editUser(id: string, updatedName: string, updatedAge: string) {
+    const userToEdit = this.users.find((user) => {
+      return user.id === id;
+    });
+    userToEdit.name = updatedName;
+    userToEdit.age = +updatedAge;
+    this.usersChanged.emit(this.users.slice());
+  }
 }
