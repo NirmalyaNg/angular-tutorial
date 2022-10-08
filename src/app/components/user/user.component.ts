@@ -20,7 +20,12 @@ export class UserComponent implements OnInit {
     console.log('ngOninit running');
     const id = this.route.snapshot.params['userId'];
     this.user = this.usersService.getUserById(id);
+    // route.snapshot.params is an object which contains the route params and their values
+    // as key value pairs
 
+    // On the other hand route.params is an observable which we need to subscribe to and
+    // the function that we pass to subscribe method will receive the object which contains
+    // the route params and their values as key value pairs
     this.route.params.subscribe((p) => {
       console.log(p);
       console.log('Inside subscription');

@@ -1,1 +1,58 @@
-<h1>User Add Component</h1>
+<div class="row">
+  <div class="col-sm-12 mt-2">
+    <div class="card">
+      <div class="card-body">
+        <form #myForm="ngForm" (ngSubmit)="handleSubmit()">
+          <h3 class="text-center">Add User</h3>
+          <div class="form-group mb-2">
+            <label for="username">Username</label>
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              name="username"
+              minlength="6"
+              required
+              ngModel
+              #username="ngModel"
+            />
+          </div>
+          <p class="error" *ngIf="username.touched && username.errors">
+            <span *ngIf="username.errors.minlength"
+              >Username should be minimum 6 characters</span
+            >
+            <span *ngIf="username.errors.required">Username is required</span>
+          </p>
+          <div class="form-group mb-2">
+            <label for="age">Age</label>
+            <input
+              type="number"
+              class="form-control"
+              min="1"
+              max="100"
+              id="age"
+              name="age"
+              required
+              ngModel
+              #age="ngModel"
+            />
+          </div>
+          <p class="error" *ngIf="age.touched && age.errors">
+            <span *ngIf="age.errors.min">Age must be greater than 0</span>
+            <span *ngIf="age.errors.max"
+              >Age must be less than or equal to 100</span
+            >
+            <span *ngIf="age.errors.required">Age is required</span>
+          </p>
+          <button
+            class="btn btn-success mt-2"
+            type="submit"
+            [disabled]="myForm.invalid"
+          >
+            Add User
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

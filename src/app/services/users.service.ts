@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { User } from '../models/user.model';
 
 @Injectable()
@@ -25,6 +25,7 @@ export class UsersService {
       age: 23,
     },
   ];
+  public usersChanged = new EventEmitter<User[]>();
 
   public getUsers() {
     return this.users.slice();
@@ -34,5 +35,14 @@ export class UsersService {
     return this.users.find((user) => {
       return user.id === id;
     });
+  }
+
+  public addUser(username: string, age: string) {
+    this.users.push({
+      id: Math.random().toString(),
+      name: username,
+      age: +age,
+    });
+    this.usersChanged.emit(this.users.slice());
   }
 }

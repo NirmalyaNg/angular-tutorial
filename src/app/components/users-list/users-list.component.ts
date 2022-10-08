@@ -18,6 +18,10 @@ export class UsersListComponent implements OnInit {
 
   ngOnInit(): void {
     this.users = this.usersService.getUsers();
+
+    this.usersService.usersChanged.subscribe((updatedUsers: User[]) => {
+      this.users = updatedUsers;
+    });
   }
 
   handleClick() {
@@ -28,5 +32,9 @@ export class UsersListComponent implements OnInit {
   handleUserNavigation(id: string) {
     this.router.navigate(['users-list', id]);
     // http://localhost:4200/users-list/u4
+  }
+
+  handleAddUserNavigation() {
+    this.router.navigate(['users-list', 'add']);
   }
 }
