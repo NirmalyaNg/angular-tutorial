@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Post } from 'src/app/models/post.model';
+import { PostsService } from 'src/app/services/posts.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-http-tutorial',
@@ -15,25 +16,22 @@ export class HttpTutorialComponent implements OnInit {
   postDescription: string;
   posts: Post[] = [];
   isFetching = false;
-  constructor(private http: HttpClient) {}
+  constructor(private postsService: PostsService, private http: HttpClient) {}
 
   ngOnInit(): void {}
 
   handleFetchPosts() {
     // This returns an Observable. We need to subscribe to that observable to get the response
     this.isFetching = true;
-    this.http.get('http://localhost:3000/posts').subscribe((res: any) => {
+    this.postsService.fetchPosts().subscribe((res) => {
       this.isFetching = false;
       this.posts = res.posts;
     });
   }
 
   handleAddPost() {
-    this.http
-      .post('http://localhost:3000/posts', {
-        title: this.postTitle,
-        description: this.postDescription,
-      })
+    this.postsService
+      .addPost(this.postTitle, this.postDescription)
       .subscribe(() => {
         this.postTitle = '';
         this.postDescription = '';
