@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post.model';
 import { PostsService } from 'src/app/services/posts.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-http-tutorial',
@@ -16,6 +16,7 @@ export class HttpTutorialComponent implements OnInit {
   postDescription: string;
   posts: Post[] = [];
   isFetching = false;
+  error: string = null;
   constructor(private postsService: PostsService, private http: HttpClient) {}
 
   ngOnInit(): void {}
@@ -30,11 +31,28 @@ export class HttpTutorialComponent implements OnInit {
   }
 
   handleAddPost() {
-    this.postsService
-      .addPost(this.postTitle, this.postDescription)
-      .subscribe(() => {
+    // Deprecated
+
+    // this.postsService
+    //   .addPost(this.postTitle, this.postDescription)
+    //   .subscribe(() => {
+    //     this.postTitle = '';
+    //     this.postDescription = '';
+    //   }, () => {});
+    this.error = null;
+    this.postsService.addPost(this.postTitle, this.postDescription).subscribe({
+      next: () => {
         this.postTitle = '';
         this.postDescription = '';
-      });
+      },
+      error: (e: HttpErrorResponse) => {
+        this.error = e.error.errorMessage;
+      },
+      // complete: () => {}
+    });
+  }
+
+  handleDeletePost(id: string) {
+    this.postsService.deletePost(id);
   }
 }

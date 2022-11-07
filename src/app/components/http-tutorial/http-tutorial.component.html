@@ -15,6 +15,9 @@
     <button class="btn btn-success mt-2" (click)="handleAddPost()">
       Add Post
     </button>
+    <div class="alert alert-danger mt-2" *ngIf="error">
+      {{ error }}
+    </div>
     <hr />
   </div>
 </div>
@@ -36,7 +39,12 @@
           <p class="card-text">
             {{ post.description }}
           </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <button
+            class="btn btn-danger mt-1"
+            (click)="handleDeletePost(post._id)"
+          >
+            Delete Post
+          </button>
         </div>
       </div>
     </div>

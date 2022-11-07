@@ -44,4 +44,8 @@ export class PostsService {
     //   this.postDescription = '';
     // });
   }
+
+  public deletePost(id: string) {
+    this.http.delete(`http://localhost:3000/posts/${id}`).subscribe();
+  }
 }
