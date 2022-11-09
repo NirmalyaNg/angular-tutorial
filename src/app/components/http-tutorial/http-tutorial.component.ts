@@ -55,4 +55,8 @@ export class HttpTutorialComponent implements OnInit {
   handleDeletePost(id: string) {
     this.postsService.deletePost(id);
   }
+
+  handleTestRequest() {
+    this.postsService.getTestData();
+  }
 }
