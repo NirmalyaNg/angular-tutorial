@@ -1,0 +1,5 @@
+<h1>Names</h1>
+<input type="text" [(ngModel)]="filterText" />
+<ul>
+  <li *ngFor="let name of names | customFilter2: filterText">{{ name }}</li>
+</ul>
