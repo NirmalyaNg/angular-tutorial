@@ -7,10 +7,56 @@
           <label>Username</label>
           <input type="text" class="form-control" formControlName="username" />
         </div>
-        <div class="form-group">
+        <p>Username value: {{ signupForm.get("username").value }}</p>
+        <p>Username valid: {{ signupForm.get("username").valid }}</p>
+        <p>Username dirty: {{ signupForm.controls.username.dirty }}</p>
+        <div class="form-group mb-2">
           <label>Email</label>
           <input type="email" class="form-control" formControlName="email" />
         </div>
+        <p
+          *ngIf="
+            signupForm.get('email').invalid && signupForm.get('email').touched
+          "
+        >
+          <span *ngIf="signupForm.get('email').errors.email"
+            >Invalid Email</span
+          >
+          <span *ngIf="signupForm.get('email').errors.required"
+            >Email cannot be empty</span
+          >
+        </p>
+        <div formGroupName="address">
+          <div class="form-group mb-2">
+            <label>City</label>
+            <input type="text" class="form-control" formControlName="city" />
+          </div>
+          <div class="form-group mb-2">
+            <label>State</label>
+            <input type="text" class="form-control" formControlName="state" />
+          </div>
+          <p>State value : {{ signupForm.get("address.state").value }}</p>
+          <!-- <p>
+            State value : {{ signupForm.controls.address.controls.state.value }}
+          </p> -->
+        </div>
+        <div class="form-group" formArrayName="skills">
+          <button
+            class="btn btn-primary mt-2 mb-2 btn-sm"
+            (click)="onAddSkill()"
+            type="button"
+          >
+            Add Skill +
+          </button>
+          <div *ngFor="let control of getControls(); let i = index">
+            <input
+              type="text"
+              class="form-control mb-1"
+              [formControlName]="i"
+            />
+          </div>
+        </div>
+
         <button class="btn btn-primary mt-2" type="submit">Submit</button>
       </form>
     </div>
