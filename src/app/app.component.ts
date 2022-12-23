@@ -23,6 +23,22 @@ export class AppComponent implements OnInit {
       }),
       skills: new FormArray([]),
     });
+
+    // this.signupForm.statusChanges.subscribe((status) => {
+    //   console.log(status);
+    // });
+
+    // this.signupForm.valueChanges.subscribe((value) => {
+    //   console.log(value);
+    // });
+
+    this.signupForm.get('email').statusChanges.subscribe((status) => {
+      console.log(status);
+    });
+
+    this.signupForm.get('email').valueChanges.subscribe((value) => {
+      console.log(value);
+    });
   }
 
   onAddSkill() {
@@ -32,6 +48,10 @@ export class AppComponent implements OnInit {
 
   getControls() {
     return (this.signupForm.get('skills') as FormArray).controls;
+  }
+
+  onDeleteSkill(index: number) {
+    (this.signupForm.get('skills') as FormArray).removeAt(index);
   }
 
   handleSubmit() {

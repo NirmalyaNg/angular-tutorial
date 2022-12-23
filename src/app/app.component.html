@@ -48,15 +48,33 @@
           >
             Add Skill +
           </button>
-          <div *ngFor="let control of getControls(); let i = index">
+          <div
+            *ngFor="let control of getControls(); let i = index"
+            style="display: flex"
+            class="mt-2"
+          >
             <input
               type="text"
               class="form-control mb-1"
               [formControlName]="i"
             />
+            <button
+              class="btn btn-danger btn-sm"
+              type="button"
+              (click)="onDeleteSkill(i)"
+            >
+              X
+            </button>
           </div>
         </div>
 
+        <!-- <button
+          class="btn btn-primary mt-2"
+          type="submit"
+          [disabled]="signupForm.invalid"
+        >
+          Submit
+        </button> -->
         <button class="btn btn-primary mt-2" type="submit">Submit</button>
       </form>
     </div>
