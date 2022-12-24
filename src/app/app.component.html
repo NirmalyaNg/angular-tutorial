@@ -6,7 +6,30 @@
         <div class="form-group mb-2">
           <label>Username</label>
           <input type="text" class="form-control" formControlName="username" />
+          <button
+            class="btn btn-success mt-2 btn-sm"
+            type="button"
+            (click)="onSuggestUsername()"
+          >
+            Suggest Username
+          </button>
         </div>
+        <p
+          *ngIf="
+            signupForm.get('username').invalid &&
+            signupForm.get('username').touched
+          "
+        >
+          <span *ngIf="signupForm.get('username').errors.required"
+            >Username is required</span
+          >
+          <span *ngIf="signupForm.get('username').errors.minlength"
+            >Username should have min 5 characters</span
+          >
+          <span *ngIf="signupForm.get('username').errors.restricted"
+            >Username is not allowed</span
+          >
+        </p>
         <p>Username value: {{ signupForm.get("username").value }}</p>
         <p>Username valid: {{ signupForm.get("username").valid }}</p>
         <p>Username dirty: {{ signupForm.controls.username.dirty }}</p>
