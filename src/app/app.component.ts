@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,7 @@ import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 export class AppComponent implements OnInit {
   signupForm: FormGroup;
   restrictedUsernames = ['ADMIN', 'admin'];
+  restrictedEmails = ['test@test.com', 'admin@test.com'];
 
   ngOnInit(): void {
     // Validations:- username (required, min length of 6 characters), email (required, valid email)
@@ -16,12 +18,13 @@ export class AppComponent implements OnInit {
       username: new FormControl('', [
         Validators.required,
         Validators.minLength(5),
-        this.isRestricted.bind(this),
+        this.isUsernameRestricted.bind(this),
       ]),
-      email: new FormControl('test@test.com', [
-        Validators.required,
-        Validators.email,
-      ]),
+      email: new FormControl(
+        '',
+        [Validators.required, Validators.email],
+        this.isEmailRestricted.bind(this)
+      ),
       address: new FormGroup({
         city: new FormControl('Kolkata', Validators.required),
         state: new FormControl('West Bengal', Validators.required),
@@ -80,7 +83,7 @@ export class AppComponent implements OnInit {
     console.log(this.signupForm);
   }
 
-  isRestricted(control: FormControl): { [key: string]: boolean } {
+  isUsernameRestricted(control: FormControl): { [key: string]: boolean } {
     // If you return an object the control will be invalid else if you return null the control will be valid
     const value = control.value;
     if (this.restrictedUsernames.includes(value)) {
@@ -90,5 +93,21 @@ export class AppComponent implements OnInit {
     } else {
       return null;
     }
+  }
+
+  isEmailRestricted(control: FormControl): Promise<any> | Observable<any> {
+    const value = control.value;
+    const promise = new Promise<any>((resolve, reject) => {
+      setTimeout(() => {
+        if (this.restrictedEmails.includes(value)) {
+          resolve({
+            restrictedEmail: true,
+          });
+        } else {
+          resolve(null);
+        }
+      }, 2000);
+    });
+    return promise;
   }
 }

@@ -48,6 +48,9 @@
           <span *ngIf="signupForm.get('email').errors.required"
             >Email cannot be empty</span
           >
+          <span *ngIf="signupForm.get('email').errors.restrictedEmail"
+            >Email not allowed</span
+          >
         </p>
         <div formGroupName="address">
           <div class="form-group mb-2">
