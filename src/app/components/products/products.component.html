@@ -1,0 +1,21 @@
+<div class="row" *ngIf="isFetching">
+  <div class="col-sm-12">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</div>
+<div class="row mt-2" *ngIf="!isFetching">
+  <div class="col-sm-12">
+    <app-product-categories [categories]="categories"></app-product-categories>
+  </div>
+  <div class="col-sm-12" *ngIf="error">
+    {{ error }}
+  </div>
+  <ng-container *ngIf="!error">
+    <div
+      class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
+      *ngFor="let product of products"
+    >
+      <app-product [product]="product"></app-product>
+    </div>
+  </ng-container>
+</div>

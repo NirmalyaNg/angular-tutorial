@@ -1,0 +1,14 @@
+<div class="card p-2 shadow-sm my-2">
+  <img
+    src="{{ product.image }}"
+    class="card-img-top img-fluid ms-auto me-auto"
+    alt="{{ product.title }}"
+  />
+  <div class="card-body py-2">
+    <h5 class="card-title">{{ product.title | slice : 0 : 15 }}</h5>
+    <p class="card-text">
+      {{ product.description | slice : 0 : 40 }}
+    </p>
+    <a href="#" class="btn btn-warning btn-sm">Add to Cart</a>
+  </div>
+</div>
