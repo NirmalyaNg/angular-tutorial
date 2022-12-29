@@ -1,13 +1,17 @@
-<div class="card p-2 shadow-sm my-2">
+<div class="card p-3 shadow-sm my-2" [routerLink]="['/products', product.id]">
   <img
     src="{{ product.image }}"
-    class="card-img-top img-fluid ms-auto me-auto"
+    class="card-img-top img-fluid ms-auto me-auto my-2"
     alt="{{ product.title }}"
   />
   <div class="card-body py-2">
     <h5 class="card-title">{{ product.title | slice : 0 : 15 }}</h5>
-    <p class="card-text">
-      {{ product.description | slice : 0 : 40 }}
+    <!-- <p class="card-text">
+      {{ product.description | slice : 0 : 35 }}
+    </p> -->
+    <p>${{ product.price }}</p>
+    <p>
+      {{ product.rating.rate }} ratings from {{ product.rating.count }} reviews.
     </p>
     <a href="#" class="btn btn-warning btn-sm">Add to Cart</a>
   </div>

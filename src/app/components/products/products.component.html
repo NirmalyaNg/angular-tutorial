@@ -5,7 +5,10 @@
 </div>
 <div class="row mt-2" *ngIf="!isFetching">
   <div class="col-sm-12">
-    <app-product-categories [categories]="categories"></app-product-categories>
+    <app-product-categories
+      [categories]="categories"
+      (onCategorySelect)="handleCategoryChange($event)"
+    ></app-product-categories>
   </div>
   <div class="col-sm-12" *ngIf="error">
     {{ error }}
@@ -13,7 +16,7 @@
   <ng-container *ngIf="!error">
     <div
       class="col-sm-12 col-md-6 col-lg-4 col-xl-3"
-      *ngFor="let product of products"
+      *ngFor="let product of products | filter : selectedCategory"
     >
       <app-product [product]="product"></app-product>
     </div>

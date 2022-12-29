@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ProductComponent } from './components/products/product/product.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { ProductCategoriesComponent } from './components/products/product-categories/product-categories.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { ProductCategoriesComponent } from './components/products/product-catego
     ProductComponent,
     LoadingSpinnerComponent,
     ProductCategoriesComponent,
+    FilterPipe,
+    ProductDetailComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

@@ -13,10 +13,8 @@ export class ProductsComponent implements OnInit {
   public categories: string[] = [];
   public isFetching = false;
   public error: string = null;
-  constructor(
-    private productsService: ProductsService,
-    private route: ActivatedRoute
-  ) {}
+  public selectedCategory: string = null;
+  constructor(private productsService: ProductsService) {}
 
   ngOnInit(): void {
     if (
@@ -42,12 +40,9 @@ export class ProductsComponent implements OnInit {
         this.error = err.message;
         this.isFetching = false;
       });
+  }
 
-    // this.route.params.subscribe((params) => {
-    //   console.log('Hii');
-
-    //   const category = params.category;
-    //   console.log(category);
-    // });
+  handleCategoryChange(category: string) {
+    this.selectedCategory = category;
   }
 }

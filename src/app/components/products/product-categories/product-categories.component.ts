@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,11 +8,15 @@ import { Router } from '@angular/router';
 })
 export class ProductCategoriesComponent implements OnInit {
   @Input() categories: string[] = [];
+  @Output() onCategorySelect = new EventEmitter<string>();
+  selectedCategory = null;
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   onCategoryChange(category: string) {
-    this.router.navigate(['/products', category]);
+    this.selectedCategory = category;
+    this.onCategorySelect.emit(this.selectedCategory);
   }
 }

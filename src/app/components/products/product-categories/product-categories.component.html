@@ -1,8 +1,22 @@
 <div class="row my-2">
   <div class="col-sm-12">
     <button
+      class="btn btn-light me-4"
+      [ngClass]="{
+        'btn-light': selectedCategory !== null,
+        'btn-dark': selectedCategory === ''
+      }"
+      (click)="onCategoryChange('')"
+    >
+      ALL PRODUCTS
+    </button>
+    <button
       *ngFor="let category of categories"
-      class="btn btn-dark me-4"
+      class="btn me-4"
+      [ngClass]="{
+        'btn-light': selectedCategory !== category,
+        'btn-dark': selectedCategory === category
+      }"
       (click)="onCategoryChange(category)"
     >
       {{ category }}

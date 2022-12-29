@@ -7,7 +7,7 @@ import { Observable, lastValueFrom, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class ProductsService {
-  private baseUrl = 'https://fakestoreapi.com/products';
+  private baseUrl = 'https://fakestoreapi.com/products/';
   public loadedProducts: Product[] = [];
   public loadedCategories: string[] = [];
   constructor(private http: HttpClient) {}
@@ -23,7 +23,7 @@ export class ProductsService {
 
   public fetchCategories(): Promise<string[]> {
     const categories$ = this.http
-      .get<string[]>(this.baseUrl + '/categories')
+      .get<string[]>(this.baseUrl + 'categories')
       .pipe(
         tap((categories) => {
           this.loadedCategories = categories;
@@ -32,10 +32,7 @@ export class ProductsService {
     return lastValueFrom(categories$);
   }
 
-  public getProductsByCategory(category: string): Promise<Product[]> {
-    const products$ = this.http.get<Product[]>(
-      this.baseUrl + '/categories/' + category
-    );
-    return lastValueFrom(products$);
+  public fetchProduct(productId: number): Observable<Product> {
+    return this.http.get<Product>(this.baseUrl + productId);
   }
 }
