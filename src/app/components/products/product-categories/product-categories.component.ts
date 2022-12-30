@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class ProductCategoriesComponent implements OnInit {
   @Input() categories: string[] = [];
   @Output() onCategorySelect = new EventEmitter<string>();
-  selectedCategory = null;
+  selectedCategory = 'ALL_PRODUCTS';
 
   constructor(private router: Router) {}
 

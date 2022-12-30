@@ -14,6 +14,8 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { ProductCategoriesComponent } from './components/products/product-categories/product-categories.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
+import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
+import { CartTotalComponent } from './components/cart/cart-total/cart-total.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { ProductDetailComponent } from './components/products/product-detail/pro
     ProductCategoriesComponent,
     FilterPipe,
     ProductDetailComponent,
+    CartItemComponent,
+    CartTotalComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, HttpClientModule],
   providers: [],

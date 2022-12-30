@@ -5,7 +5,12 @@ import { Product } from '../components/products/product/product.model';
 })
 export class FilterPipe implements PipeTransform {
   transform(value: any, propValue: string) {
-    if (!value || value.length === 0 || !propValue) {
+    if (
+      !value ||
+      value.length === 0 ||
+      !propValue ||
+      propValue === 'ALL_PRODUCTS'
+    ) {
       return value;
     }
     const filteredProducts = value.filter(

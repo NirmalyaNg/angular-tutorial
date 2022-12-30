@@ -1,10 +1,13 @@
 .card img {
   width: 180px !important;
   height: 165px !important;
+  cursor: pointer;
 }
 
-.card {
+.card-title {
   cursor: pointer;
+}
+.card {
   transition: all 0.1s ease-in;
   height: 370px !important;
 }

@@ -1,11 +1,14 @@
-<div class="card p-3 shadow-sm my-2" [routerLink]="['/products', product.id]">
+<div class="card p-3 shadow-sm my-2 border-0">
   <img
     src="{{ product.image }}"
     class="card-img-top img-fluid ms-auto me-auto my-2"
     alt="{{ product.title }}"
+    [routerLink]="['/products', product.id]"
   />
   <div class="card-body py-2">
-    <h5 class="card-title">{{ product.title | slice : 0 : 15 }}</h5>
+    <h5 class="card-title" [routerLink]="['/products', product.id]">
+      {{ product.title | slice : 0 : 15 }}
+    </h5>
     <!-- <p class="card-text">
       {{ product.description | slice : 0 : 35 }}
     </p> -->
@@ -13,6 +16,8 @@
     <p>
       {{ product.rating.rate }} ratings from {{ product.rating.count }} reviews.
     </p>
-    <a href="#" class="btn btn-warning btn-sm">Add to Cart</a>
+    <button class="btn btn-warning btn-sm" (click)="onAddToCart()">
+      Add to Cart
+    </button>
   </div>
 </div>

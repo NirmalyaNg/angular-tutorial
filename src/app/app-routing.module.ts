@@ -5,6 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
+import { ProductResolver } from './resolvers/product.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -15,6 +16,7 @@ const routes: Routes = [
   {
     path: 'products/:id',
     component: ProductDetailComponent,
+    resolve: { product: ProductResolver },
   },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },

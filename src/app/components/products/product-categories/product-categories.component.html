@@ -3,10 +3,10 @@
     <button
       class="btn btn-light me-4"
       [ngClass]="{
-        'btn-light': selectedCategory !== null,
-        'btn-dark': selectedCategory === ''
+        'btn-light': selectedCategory !== 'ALL_PRODUCTS',
+        'btn-dark': selectedCategory === 'ALL_PRODUCTS'
       }"
-      (click)="onCategoryChange('')"
+      (click)="onCategoryChange('ALL_PRODUCTS')"
     >
       ALL PRODUCTS
     </button>
