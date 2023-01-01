@@ -4,7 +4,7 @@ import {
   Resolve,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Product } from '../components/products/product/product.model';
+import { Product } from '../models/product.model';
 import { Observable } from 'rxjs';
 import { ProductsService } from '../services/products.service';
 @Injectable({

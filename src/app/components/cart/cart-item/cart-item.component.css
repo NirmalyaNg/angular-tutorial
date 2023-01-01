@@ -2,3 +2,17 @@ img {
   width: 100px;
   height: 110px;
 }
+
+.removeCartIcon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  zoom: 1.2;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  color: red;
+}
+
+.removeCartIcon:hover {
+  transform: scale(1.5);
+}

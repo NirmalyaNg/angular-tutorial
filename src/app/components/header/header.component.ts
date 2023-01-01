@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -11,7 +12,9 @@ export class HeaderComponent implements OnInit {
   isVisible = false;
   cartCount: number = 0;
   subscriptions = new Subscription();
-  constructor(private cartService: CartService) {}
+
+  isLoggedIn: boolean = false;
+  constructor(private cartService: CartService, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -19,6 +22,20 @@ export class HeaderComponent implements OnInit {
         (count) => (this.cartCount = count)
       )
     );
+
+    this.subscriptions.add(
+      this.auth.userSubject.subscribe((user) => {
+        if (user) {
+          this.isLoggedIn = true;
+        } else {
+          this.isLoggedIn = false;
+        }
+      })
+    );
+  }
+
+  onLogout() {
+    this.auth.logout();
   }
 
   toggleVisibility() {

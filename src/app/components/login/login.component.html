@@ -1,1 +1,57 @@
-<p>login works!</p>
+<div class="row">
+  <div class="col-sm-12 col-lg-6 offset-lg-3">
+    <div class="card border-0 shadow-sm mt-3 p-3">
+      <div class="card-body">
+        <h3 class="text-center">LOGIN</h3>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="form-group mb-2">
+            <label>Email</label>
+            <input type="text" class="form-control" formControlName="email" />
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="
+              loginForm.get('email').invalid && loginForm.get('email').touched
+            "
+          >
+            <span *ngIf="loginForm.get('email').errors.required"
+              >Email is required</span
+            >
+            <span *ngIf="loginForm.get('email').errors.email"
+              >Email is invalid</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Password</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+            />
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="
+              loginForm.get('password').invalid &&
+              loginForm.get('password').touched
+            "
+          >
+            <span *ngIf="loginForm.get('password').errors.required"
+              >Password is required</span
+            >
+            <span *ngIf="loginForm.get('password').errors.minlength"
+              >Password should be minimum 6 characters</span
+            >
+          </p>
+          <button
+            class="btn btn-dark"
+            type="submit"
+            [disabled]="loginForm.invalid"
+          >
+            LOGIN
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

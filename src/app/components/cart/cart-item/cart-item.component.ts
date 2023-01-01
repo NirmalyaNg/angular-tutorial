@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Product } from '../../products/product/product.model';
+import { Product } from '../../../models/product.model';
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -19,5 +19,9 @@ export class CartItemComponent implements OnInit {
 
   onDecrement() {
     this.cart.decrement(this.item.id);
+  }
+
+  onRemoveFromCart() {
+    this.cart.removeFromCart(this.item.id);
   }
 }
