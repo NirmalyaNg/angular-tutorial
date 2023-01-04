@@ -6,8 +6,8 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  public cartItemsChanged = new BehaviorSubject<Product[]>([]);
-  public cartItemsCountChanged = new BehaviorSubject<number>(0);
+  public cartItems = new BehaviorSubject<Product[]>([]);
+  public cartItemsCount = new BehaviorSubject<number>(0);
 
   addToCart(product: Product) {
     let { items, count } = this.getPreviousValues();
@@ -50,15 +50,27 @@ export class CartService {
     this.emitUpdates(items, count);
   }
 
+  setCartItems() {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      const cartItems: Product[] = JSON.parse(storedCart);
+      const cartCount = cartItems
+        .map((item) => item.quantity)
+        .reduce((q1, q2) => q1 + q2, 0);
+      this.emitUpdates(cartItems, cartCount);
+    }
+  }
+
   private getPreviousValues() {
     return {
-      items: this.cartItemsChanged.getValue(),
-      count: this.cartItemsCountChanged.getValue(),
+      items: this.cartItems.getValue(),
+      count: this.cartItemsCount.getValue(),
     };
   }
 
   private emitUpdates(updatedItems: Product[], updatedCount: number) {
-    this.cartItemsCountChanged.next(updatedCount);
-    this.cartItemsChanged.next(updatedItems.slice());
+    this.cartItemsCount.next(updatedCount);
+    this.cartItems.next(updatedItems.slice());
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
   }
 }

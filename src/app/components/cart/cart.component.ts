@@ -15,7 +15,7 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.cart.cartItemsChanged.subscribe((items) => {
+      this.cart.cartItems.subscribe((items) => {
         this.items = items;
       })
     );

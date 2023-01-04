@@ -18,7 +18,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.cartService.cartItemsCountChanged.subscribe(
+      this.cartService.cartItemsCount.subscribe(
         (count) => (this.cartCount = count)
       )
     );

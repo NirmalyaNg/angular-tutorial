@@ -12,7 +12,7 @@ export class CartTotalComponent implements OnInit {
   constructor(private cart: CartService) {}
 
   ngOnInit(): void {
-    this.cart.cartItemsChanged
+    this.cart.cartItems
       .pipe(
         map((items) => {
           return items.map((item) => item.price * item.quantity);

@@ -7,12 +7,14 @@ img {
   position: absolute;
   top: 5px;
   right: 5px;
-  zoom: 1.2;
+  zoom: 1.3;
   transition: all 0.2s ease-in;
   cursor: pointer;
-  color: red;
+  opacity: 0.5;
+  color: tomato;
 }
 
 .removeCartIcon:hover {
-  transform: scale(1.5);
+  transform: scale(1.2);
+  opacity: 1;
 }
