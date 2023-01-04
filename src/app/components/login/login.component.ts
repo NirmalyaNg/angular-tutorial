@@ -10,7 +10,17 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  constructor(private auth: AuthService, private router: Router) {}
+  showsignupSuccess = false;
+  constructor(private auth: AuthService, private router: Router) {
+    // Executed when signup is successful and user is redirected from signup page
+    if (
+      this.router.getCurrentNavigation() &&
+      this.router.getCurrentNavigation().extras.state
+    ) {
+      this.showsignupSuccess =
+        !!this.router.getCurrentNavigation().extras.state.signupSuccess;
+    }
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({

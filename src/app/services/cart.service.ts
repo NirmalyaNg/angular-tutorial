@@ -6,50 +6,59 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartService {
-  private cartItems: Product[] = [];
-  private cartItemsCount: number = 0;
   public cartItemsChanged = new BehaviorSubject<Product[]>([]);
   public cartItemsCountChanged = new BehaviorSubject<number>(0);
 
   addToCart(product: Product) {
-    const p = this.cartItems.find((item) => item.id === product.id);
+    let { items, count } = this.getPreviousValues();
+    const p = items.find((item) => item._id === product._id);
     if (p) {
       p.quantity++;
     } else {
-      this.cartItems.push({
+      items.push({
         ...product,
         quantity: 1,
       });
     }
-    this.cartItemsCount++;
-    this.emitUpdates();
+    count++;
+    this.emitUpdates(items, count);
   }
 
-  removeFromCart(id: number) {
-    const index = this.cartItems.findIndex((item) => item.id === id);
-    this.cartItemsCount -= this.cartItems[index].quantity;
-    this.cartItems.splice(index, 1);
-    this.emitUpdates();
+  removeFromCart(id: string) {
+    let { items, count } = this.getPreviousValues();
+    const index = items.findIndex((item) => item._id === id);
+    count -= items[index].quantity;
+    items.splice(index, 1);
+    this.emitUpdates(items, count);
   }
 
-  increment(id: number) {
-    const product = this.cartItems.find((item) => item.id === id);
+  increment(id: string) {
+    let { items, count } = this.getPreviousValues();
+    const product = items.find((item) => item._id === id);
     product.quantity++;
-    this.cartItemsCount++;
-    this.emitUpdates();
+    count++;
+    this.emitUpdates(items, count);
   }
 
-  decrement(id: number) {
-    const product = this.cartItems.find((item) => item.id === id);
+  decrement(id: string) {
+    let { items, count } = this.getPreviousValues();
+    const product = items.find((item) => item._id === id);
     if (product.quantity > 1) {
       product.quantity--;
-      this.cartItemsCount--;
+      count--;
     }
-    this.emitUpdates();
+    this.emitUpdates(items, count);
   }
 
-  private emitUpdates() {
-    this.cartItemsCountChanged.next(this.cartItemsCount);
-    this.cartItemsChanged.next(this.cartItems.slice());
+  private getPreviousValues() {
+    return {
+      items: this.cartItemsChanged.getValue(),
+      count: this.cartItemsCountChanged.getValue(),
+    };
+  }
+
+  private emitUpdates(updatedItems: Product[], updatedCount: number) {
+    this.cartItemsCountChanged.next(updatedCount);
+    this.cartItemsChanged.next(updatedItems.slice());
   }
 }

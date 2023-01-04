@@ -8,23 +8,80 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private firebaseAPIKEY = 'AIzaSyCfM0qcgP5OdAZcIsxFf_oitrMnHASc9ik';
   public userSubject = new BehaviorSubject<User>(null);
+  public baseUrl: string = 'http://localhost:3000/api/auth/';
   constructor(private http: HttpClient) {}
 
   login(email: string, password: string): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(
-        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.firebaseAPIKEY}`,
-        {
-          email: email,
-          password: password,
-          returnSecureToken: true,
-        }
-      )
-      .pipe(
-        tap((authResponse) => {
-          /*
+      .post<AuthResponse>(this.baseUrl + 'login', {
+        email: email,
+        password: password,
+        returnSecureToken: true,
+      })
+      .pipe(tap(this.handleAuthenticationSuccess.bind(this)));
+  }
+
+  signup(username: string, email: string, password: string) {
+    return this.http.post(this.baseUrl + 'signup', {
+      username,
+      email,
+      password,
+    });
+  }
+
+  isUsernameTaken(username: string): Observable<{ [key: string]: boolean }> {
+    return this.http.post<{ [key: string]: boolean }>(
+      this.baseUrl + 'checkUsername',
+      {
+        username,
+      }
+    );
+  }
+
+  isEmailTaken(email: string): Observable<{ [key: string]: boolean }> {
+    return this.http.post<{ [key: string]: boolean }>(
+      this.baseUrl + 'checkEmail',
+      {
+        email,
+      }
+    );
+  }
+
+  autoLogin() {
+    const userData = localStorage.getItem('authUser');
+    if (!userData) {
+      return;
+    }
+    const storedUserObj: {
+      id: string;
+      email: string;
+      username: string;
+      _token: string;
+      _expirationDate: string;
+    } = JSON.parse(userData);
+    const expirationDate = new Date(storedUserObj._expirationDate);
+    const storedUser = new User(
+      storedUserObj.id,
+      storedUserObj.email,
+      storedUserObj.username,
+      storedUserObj._token,
+      expirationDate
+    );
+    if (!storedUser.token) {
+      this.logout();
+    } else {
+      this.userSubject.next(storedUser);
+    }
+  }
+
+  logout() {
+    localStorage.removeItem('authUser');
+    this.userSubject.next(null);
+  }
+
+  private handleAuthenticationSuccess(authResponse: AuthResponse) {
+    /*
         new Date().getTime() --> gives us the current date in miliseconds
         authResponse.expiresIn --> number of seconds in which the token will expire (in string)
         +authResponse.expiresIn --> number of seconds in which the token will expire (in number)
@@ -32,22 +89,15 @@ export class AuthService {
         new Date().getTime() + (+authResponse.expiresIn * 1000) --> total time in miliseconds after which token will expire
         new Date(new Date().getTime() + (+authResponse.expiresIn * 1000))  --> expiration date of the token
       */
-          const expirationDate = new Date(
-            new Date().getTime() + +authResponse.expiresIn * 1000
-          );
-          const user = new User(
-            authResponse.localId,
-            authResponse.email,
-            authResponse.idToken,
-            expirationDate
-          );
-
-          this.userSubject.next(user);
-        })
-      );
-  }
-
-  logout() {
-    this.userSubject.next(null);
+    const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
+    const user = new User(
+      authResponse.user._id,
+      authResponse.user.email,
+      authResponse.user.username,
+      authResponse.token,
+      expirationDate
+    );
+    localStorage.setItem('authUser', JSON.stringify(user));
+    this.userSubject.next(user);
   }
 }

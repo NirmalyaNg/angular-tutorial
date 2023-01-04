@@ -13,7 +13,9 @@
           {{ product.rating.rate }} ratings from
           {{ product.rating.count }} reviews
         </p>
-        <button class="btn btn-dark mt-2">ADD TO CART</button>
+        <button class="btn btn-dark mt-2" (click)="onAddToCart()">
+          ADD TO CART
+        </button>
       </div>
     </div>
   </div>

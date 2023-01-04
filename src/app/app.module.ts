@@ -17,6 +17,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 import { CartTotalComponent } from './components/cart/cart-total/cart-total.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { CartTotalComponent } from './components/cart/cart-total/cart-total.comp
     ProductDetailComponent,
     CartItemComponent,
     CartTotalComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

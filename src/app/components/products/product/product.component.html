@@ -3,10 +3,10 @@
     src="{{ product.image }}"
     class="card-img-top img-fluid ms-auto me-auto my-2"
     alt="{{ product.title }}"
-    [routerLink]="['/products', product.id]"
+    [routerLink]="['/products', product._id]"
   />
   <div class="card-body py-2">
-    <h5 class="card-title" [routerLink]="['/products', product.id]">
+    <h5 class="card-title" [routerLink]="['/products', product._id]">
       {{ product.title | slice : 0 : 15 }}
     </h5>
     <!-- <p class="card-text">

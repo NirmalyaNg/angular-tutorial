@@ -14,14 +14,14 @@ export class CartItemComponent implements OnInit {
   ngOnInit(): void {}
 
   onIncrement() {
-    this.cart.increment(this.item.id);
+    this.cart.increment(this.item._id);
   }
 
   onDecrement() {
-    this.cart.decrement(this.item.id);
+    this.cart.decrement(this.item._id);
   }
 
   onRemoveFromCart() {
-    this.cart.removeFromCart(this.item.id);
+    this.cart.removeFromCart(this.item._id);
   }
 }

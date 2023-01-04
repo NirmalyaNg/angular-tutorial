@@ -1,1 +1,94 @@
-<p>signup works!</p>
+<div class="row">
+  <div class="col-sm-12 col-lg-6 offset-lg-3">
+    <div class="card border-0 shadow-sm mt-3 p-3">
+      <div class="card-body">
+        <h3 class="text-center">SIGNUP</h3>
+        <form [formGroup]="signupForm" (ngSubmit)="handleSubmit()">
+          <div class="form-group mb-2">
+            <label>Username</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="username"
+            />
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="f.get('username').touched && f.get('username').invalid"
+          >
+            <span *ngIf="f.get('username').errors.required"
+              >Username is required</span
+            >
+            <span *ngIf="f.get('username').errors.usernameTaken"
+              >Username is already taken</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Email</label>
+            <input type="text" class="form-control" formControlName="email" />
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="f.get('email').touched && f.get('email').invalid"
+          >
+            <span *ngIf="f.get('email').errors.email">Email is invalid</span>
+            <span *ngIf="f.get('email').errors.required"
+              >Email is required</span
+            >
+            <span *ngIf="f.get('email').errors.emailTaken"
+              >Email is already taken</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Password</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="password"
+            />
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="f.get('password').touched && f.get('password').invalid"
+          >
+            <span *ngIf="f.get('password').errors.required"
+              >Password is required</span
+            >
+            <span *ngIf="f.get('password').errors.minlength"
+              >Password should be minimum 6 characters in length</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              class="form-control"
+              formControlName="confirmPassword"
+            />
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="
+              f.get('confirmPassword').touched &&
+              f.get('confirmPassword').invalid
+            "
+          >
+            <span *ngIf="f.get('confirmPassword').errors.required"
+              >Confirm Password is required</span
+            >
+            <span *ngIf="f.get('confirmPassword').errors.mustMatch"
+              >Password and Confirm Password must match</span
+            >
+          </p>
+          <button
+            class="btn btn-dark me-2"
+            type="submit"
+            [disabled]="f.invalid || f.pending"
+          >
+            SIGNUP
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
