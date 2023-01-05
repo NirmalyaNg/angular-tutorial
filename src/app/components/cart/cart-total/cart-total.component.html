@@ -12,7 +12,17 @@
     </div>
     <hr />
     <div class="d-grid gap-2 col-12">
-      <button class="btn btn-success" type="button">CHECKOUT</button>
+      <button
+        class="btn btn-success"
+        type="button"
+        [disabled]="!isAuthenticated"
+        routerLink="/checkout"
+      >
+        CHECKOUT
+      </button>
     </div>
+    <p class="text-secondary mt-2 text-center" *ngIf="!isAuthenticated">
+      Please login to proceed
+    </p>
   </div>
 </div>

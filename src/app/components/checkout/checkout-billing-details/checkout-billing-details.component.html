@@ -1,0 +1,58 @@
+<div class="card border-0 p-4">
+  <div class="card-body">
+    <h3>Shipping Details</h3>
+    <hr />
+    <form [formGroup]="checkoutForm" (ngSubmit)="handleSubmit()">
+      <div class="form-group mb-2">
+        <label>Full Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+      <div class="form-group mb-2">
+        <label>Address</label>
+        <textarea
+          class="form-control"
+          style="resize: none"
+          formControlName="address"
+        ></textarea>
+      </div>
+      <div class="form-group mb-2">
+        <label>Country</label>
+        <select class="form-select" formControlName="country">
+          <option value="India">India</option>
+          <option value="USA">USA</option>
+          <option value="Australia">Australia</option>
+        </select>
+      </div>
+      <div class="form-group mb-2">
+        <label>City</label>
+        <select class="form-select" formControlName="city">
+          <option value="Kolkata">Kolkata</option>
+          <option value="Chennai">Chennai</option>
+          <option value="Mumbai">Mumbai</option>
+        </select>
+      </div>
+      <div class="form-group mb-2">
+        <div class="row">
+          <div class="col-sm-12 col-lg-6">
+            <label>State</label>
+            <input type="text" class="form-control" formControlName="state" />
+          </div>
+          <div class="col-sm-12 col-lg-6">
+            <label>Pincode</label>
+            <input type="text" class="form-control" formControlName="pincode" />
+          </div>
+        </div>
+      </div>
+      <hr />
+      <h4>PAYMENT METHOD</h4>
+      <button
+        class="btn btn-dark btn-block"
+        style="cursor: pointer"
+        type="submit"
+        [disabled]="checkoutForm.invalid"
+      >
+        Pay ${{ getTotalPrice() }} with Stripe
+      </button>
+    </form>
+  </div>
+</div>

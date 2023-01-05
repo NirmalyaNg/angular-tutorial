@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -18,6 +18,9 @@ import { ProductDetailComponent } from './components/products/product-detail/pro
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 import { CartTotalComponent } from './components/cart/cart-total/cart-total.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { AuthInterceptor } from './services/auth-interceptor.service';
+import { CheckoutBillingDetailsComponent } from './components/checkout/checkout-billing-details/checkout-billing-details.component';
+import { CheckoutCartDetailsComponent } from './components/checkout/checkout-cart-details/checkout-cart-details.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     CartItemComponent,
     CartTotalComponent,
     CheckoutComponent,
+    CheckoutBillingDetailsComponent,
+    CheckoutCartDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,9 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     HttpClientModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

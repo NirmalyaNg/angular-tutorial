@@ -10,8 +10,21 @@
         <app-cart-total></app-cart-total>
       </div>
     </div>
-    <h5 class="mt-4" *ngIf="items.length === 0">
-      YOUR CART <i class="fa-solid fa-cart-shopping"></i> IS EMPTY
-    </h5>
+    <div
+      class="mt-4 text-center"
+      *ngIf="items.length === 0 && !isAuthenticated"
+    >
+      <img
+        src="../../../assets/images/cart-empty.jpg"
+        alt="empty-cart"
+        class="img-fluid cart-empty"
+      />
+      <h4 class="mt-5">Missing Cart items?</h4>
+      <p>Login to see the items you added previously</p>
+      <button class="btn btn-dark mt-2" routerLink="/login">LOGIN</button>
+    </div>
+    <div class="mt-4 text-center" *ngIf="items.length === 0 && isAuthenticated">
+      <h4 class="mt-5">Your cart is empty.</h4>
+    </div>
   </div>
 </div>

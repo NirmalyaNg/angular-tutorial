@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../models/auth-response.model';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, exhaustMap, tap } from 'rxjs';
 import { User } from '../models/user.model';
+import { Cart } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root',
@@ -12,14 +13,29 @@ export class AuthService {
   public baseUrl: string = 'http://localhost:3000/api/auth/';
   constructor(private http: HttpClient) {}
 
-  login(email: string, password: string): Observable<AuthResponse> {
+  login(email: string, password: string): Observable<any> {
     return this.http
       .post<AuthResponse>(this.baseUrl + 'login', {
         email: email,
         password: password,
         returnSecureToken: true,
       })
-      .pipe(tap(this.handleAuthenticationSuccess.bind(this)));
+      .pipe(
+        exhaustMap((authResponse) => {
+          this.handleAuthenticationSuccess(authResponse);
+          return this.http.get(
+            'http://localhost:3000/api/cart/' + authResponse.user._id,
+            {
+              headers: {
+                Authorization: `Bearer ${authResponse.token}`,
+              },
+            }
+          );
+        }),
+        tap((res: Cart) => {
+          console.log(res);
+        })
+      );
   }
 
   signup(username: string, email: string, password: string) {
