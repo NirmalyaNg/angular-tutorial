@@ -23,7 +23,7 @@ export class CheckoutCartDetailsComponent implements OnInit, OnDestroy {
 
   getTotalPrice() {
     return this.cartItems
-      .map((item) => item.price)
+      .map((item) => item.price * item.quantity)
       .reduce((p1, p2) => p1 + p2, 0)
       .toFixed(2);
   }

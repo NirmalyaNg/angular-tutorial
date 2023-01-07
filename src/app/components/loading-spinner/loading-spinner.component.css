@@ -18,7 +18,7 @@
   height: 100vh;
   width: 100vw;
   z-index: 50;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.6);
 }
 .lds-facebook {
   display: inline-block;

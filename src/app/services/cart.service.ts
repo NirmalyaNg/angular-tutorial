@@ -61,8 +61,7 @@ export class CartService {
     const storedCart = localStorage.getItem('cart');
     if (storedCart) {
       const cartItems: Product[] = JSON.parse(storedCart);
-      const cartCount = this.getCartItemsCount(cartItems);
-      this.emitUpdates(cartItems, cartCount);
+      this.emitUpdates(cartItems);
     } else {
       this.fetchCart().subscribe();
     }
@@ -79,8 +78,11 @@ export class CartService {
         })
         .pipe(
           tap((cart: Cart) => {
-            const cartCount = this.getCartItemsCount(cart.products);
-            this.emitUpdates(cart.products, cartCount);
+            if (cart.products && cart.products.length >= 1) {
+              this.emitUpdates(cart.products);
+            } else {
+              this.emitUpdates([]);
+            }
           })
         );
     } else {
@@ -89,13 +91,12 @@ export class CartService {
   }
 
   public setCartAfterLogin(cartItems: Product[]) {
-    const cartCount = this.getCartItemsCount(cartItems);
-    this.emitUpdates(cartItems, cartCount);
+    this.emitUpdates(cartItems);
   }
 
   public saveCartToDb(items: Product[]) {
     this.saveCart(items).subscribe((res: any) => {
-      this.emitUpdates(res.products, this.getCartItemsCount(res.products));
+      this.emitUpdates(res.products);
     });
   }
 
@@ -110,14 +111,15 @@ export class CartService {
     const user = this.auth.userSubject.getValue();
     if (user) {
       this.saveCart(items).subscribe((res: any) => {
-        this.emitUpdates(res.products, count);
+        this.emitUpdates(res.products);
       });
     } else {
-      this.emitUpdates(items, count);
+      this.emitUpdates(items);
     }
   }
 
-  private emitUpdates(updatedItems: Product[], updatedCount: number) {
+  private emitUpdates(updatedItems: Product[]) {
+    const updatedCount = this.getCartItemsCount(updatedItems);
     this.cartItemsCount.next(updatedCount);
     this.cartItems.next(updatedItems.slice());
     // Store the updated cart as JSON string in the local storage
@@ -132,19 +134,11 @@ export class CartService {
   }
 
   private saveCart(cartItems: Product[]): Observable<Cart> {
-    return this.auth.userSubject.pipe(
-      take(1),
-      exhaustMap((authResponse) => {
-        return this.http.post<Cart>(
-          'http://localhost:3000/api/cart',
-          cartItems,
-          {
-            headers: {
-              Authorization: `Bearer ${authResponse.token}`,
-            },
-          }
-        );
-      })
-    );
+    const user = this.auth.userSubject.getValue();
+    return this.http.post<Cart>('http://localhost:3000/api/cart', cartItems, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
   }
 }

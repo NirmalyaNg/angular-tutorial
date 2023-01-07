@@ -1,10 +1,11 @@
+<app-loading-spinner *ngIf="paymentInProgress"></app-loading-spinner>
 <div class="card border-0 p-4">
   <div class="card-body">
     <h3>Shipping Details</h3>
     <hr />
     <form [formGroup]="checkoutForm" (ngSubmit)="handleSubmit()">
       <div class="form-group mb-2">
-        <label>Full Name</label>
+        <label>Username</label>
         <input type="text" class="form-control" formControlName="name" />
       </div>
       <div class="form-group mb-2">
@@ -51,7 +52,7 @@
         type="submit"
         [disabled]="checkoutForm.invalid"
       >
-        Pay ${{ getTotalPrice() }} with Stripe
+        Pay ₹{{ getTotalPrice() }} with Stripe
       </button>
     </form>
   </div>

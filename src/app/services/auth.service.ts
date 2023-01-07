@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { AuthResponse } from '../models/auth-response.model';
 import { BehaviorSubject, Observable, exhaustMap, tap } from 'rxjs';
 import { User } from '../models/user.model';
-import { Cart } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root',
@@ -31,9 +30,6 @@ export class AuthService {
               },
             }
           );
-        }),
-        tap((res: Cart) => {
-          console.log(res);
         })
       );
   }
@@ -92,8 +88,12 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('authUser');
-    this.userSubject.next(null);
+    return this.http.post(this.baseUrl + 'logout', null).pipe(
+      tap(() => {
+        localStorage.removeItem('authUser');
+        this.userSubject.next(null);
+      })
+    );
   }
 
   private handleAuthenticationSuccess(authResponse: AuthResponse) {

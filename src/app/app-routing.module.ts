@@ -7,6 +7,9 @@ import { CartComponent } from './components/cart/cart.component';
 import { ProductDetailComponent } from './components/products/product-detail/product-detail.component';
 import { ProductResolver } from './resolvers/product.resolver';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OrdersComponent } from './components/orders/orders.component';
+import { OrdersResolver } from './resolvers/orders.resolver';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -22,7 +25,13 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'checkout', component: CheckoutComponent },
+  {
+    path: 'orders',
+    component: OrdersComponent,
+    resolve: { orders: OrdersResolver },
+    canActivate: [AuthGuard],
+  },
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
