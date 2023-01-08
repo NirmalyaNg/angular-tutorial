@@ -4,19 +4,22 @@ export class User {
   public email: string;
   public _expirationDate: Date;
   private _token: string;
+  public isAdmin: boolean;
 
   constructor(
     id: string,
     email: string,
     username: string,
     token: string,
-    expirationDate: Date
+    expirationDate: Date,
+    isAdmin: boolean
   ) {
     this.id = id;
     this.email = email;
     this.username = username;
     this._token = token;
     this._expirationDate = expirationDate;
+    this.isAdmin = isAdmin;
   }
 
   get token() {

@@ -9,15 +9,19 @@
     <h5 class="card-title" [routerLink]="['/products', product._id]">
       {{ product.title | slice : 0 : 15 }}
     </h5>
-    <!-- <p class="card-text">
-      {{ product.description | slice : 0 : 35 }}
-    </p> -->
     <p>${{ product.price }}</p>
     <p>
       {{ product.rating.rate }} ratings from {{ product.rating.count }} reviews.
     </p>
-    <button class="btn btn-warning btn-sm" (click)="onAddToCart()">
+    <button
+      class="btn btn-warning btn-sm"
+      (click)="onAddToCart()"
+      *ngIf="!inCart"
+    >
       Add to Cart
+    </button>
+    <button class="btn btn-success btn-sm" routerLink="/cart" *ngIf="inCart">
+      Go to Cart
     </button>
   </div>
 </div>

@@ -56,7 +56,7 @@ export class CheckoutBillingDetailsComponent implements OnInit, OnDestroy {
       token: (stripeToken: any) => {
         const email: string = stripeToken.email;
         const shippingData: ShippingData = {
-          name: this.checkoutForm.value.name,
+          name: this.auth.userSubject.getValue().username,
           address: {
             line1: this.checkoutForm.value.address,
             postal_code: this.checkoutForm.value.pincode,

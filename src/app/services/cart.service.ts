@@ -1,144 +1,126 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { Product } from '../models/product.model';
-import { BehaviorSubject, Observable, exhaustMap, of, take, tap } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { Cart } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
+  private baseUrl = 'http://localhost:3000/api/cart/';
   public cartItems = new BehaviorSubject<Product[]>([]);
   public cartItemsCount = new BehaviorSubject<number>(0);
 
-  constructor(private http: HttpClient, private auth: AuthService) {}
+  constructor(private http: HttpClient, private injector: Injector) {}
 
-  public addToCart(product: Product) {
-    let { items, count } = this.getPreviousValues();
-    const p = items.find((item) => item._id === product._id);
-    if (p) {
-      p.quantity++;
+  public addToCart(prod: Product) {
+    let items = this.cartItems.getValue().slice();
+    let count = this.cartItemsCount.getValue();
+    const product: Product = items.find((item) => item._id === prod._id);
+    if (product) {
+      product.quantity++;
     } else {
-      items.push({
-        ...product,
-        quantity: 1,
-      });
+      items.push({ ...prod, quantity: 1 });
     }
     count++;
-    // Save cart to DB
-    this.checkIfLoggedInThenEmitUpdates(items, count);
+    const auth = this.injector.get(AuthService);
+    const user = auth.userSubject.getValue();
+    if (user) {
+      this.saveCartToDB(items).subscribe({
+        next: () => {
+          this.emitCartUpdates(items);
+        },
+      });
+    } else {
+      localStorage.setItem('cart', JSON.stringify(items));
+      this.emitCartUpdates(items);
+    }
   }
 
   public removeFromCart(id: string) {
-    let { items, count } = this.getPreviousValues();
+    let items = this.cartItems.getValue().slice();
+    let count = this.cartItemsCount.getValue();
     const index = items.findIndex((item) => item._id === id);
-    count -= items[index].quantity;
-    items.splice(index, 1);
-    this.checkIfLoggedInThenEmitUpdates(items, count);
+    if (index >= 0) {
+      count -= items[index].quantity;
+      items.splice(index, 1);
+      const auth = this.injector.get(AuthService);
+      const user = auth.userSubject.getValue();
+      if (user) {
+        this.saveCartToDB(items).subscribe({
+          next: () => {
+            this.emitCartUpdates(items);
+          },
+        });
+      } else {
+        localStorage.setItem('cart', JSON.stringify(items));
+        this.emitCartUpdates(items);
+      }
+    }
   }
 
   public increment(id: string) {
-    let { items, count } = this.getPreviousValues();
+    let items = this.cartItems.getValue().slice();
+    let count = this.cartItemsCount.getValue();
     const product = items.find((item) => item._id === id);
     product.quantity++;
     count++;
-    this.checkIfLoggedInThenEmitUpdates(items, count);
+    this.emitCartUpdates(items);
   }
 
   public decrement(id: string) {
-    let { items, count } = this.getPreviousValues();
+    let items = this.cartItems.getValue().slice();
+    let count = this.cartItemsCount.getValue();
     const product = items.find((item) => item._id === id);
-    if (product.quantity > 1) {
+    if (product.quantity !== 1) {
       product.quantity--;
       count--;
-    }
-    this.checkIfLoggedInThenEmitUpdates(items, count);
-  }
-
-  public setCartItemsOnLoad() {
-    // Get the updated cart as JSON string from local storage
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-      const cartItems: Product[] = JSON.parse(storedCart);
-      this.emitUpdates(cartItems);
-    } else {
-      this.fetchCart().subscribe();
+      this.emitCartUpdates(items);
     }
   }
 
-  public fetchCart() {
-    const user = this.auth.userSubject.getValue();
-    if (user) {
-      return this.http
-        .get('http://localhost:3000/api/cart/' + user.id, {
-          headers: {
-            Authorization: `Bearer ${user.token}`,
-          },
-        })
-        .pipe(
-          tap((cart: Cart) => {
-            if (cart.products && cart.products.length >= 1) {
-              this.emitUpdates(cart.products);
-            } else {
-              this.emitUpdates([]);
-            }
-          })
+  public mergeCartAndSaveToDb(items: Product[]) {
+    const mergedCart = [...items];
+    const localCart: Product[] = JSON.parse(localStorage.getItem('cart'));
+    if (localCart) {
+      localCart.forEach((item) => {
+        const isPresent = !!mergedCart.find(
+          (product) => product._id === item._id
         );
-    } else {
-      return of();
-    }
-  }
-
-  public setCartAfterLogin(cartItems: Product[]) {
-    this.emitUpdates(cartItems);
-  }
-
-  public saveCartToDb(items: Product[]) {
-    this.saveCart(items).subscribe((res: any) => {
-      this.emitUpdates(res.products);
-    });
-  }
-
-  private getPreviousValues() {
-    return {
-      items: this.cartItems.getValue(),
-      count: this.cartItemsCount.getValue(),
-    };
-  }
-
-  private checkIfLoggedInThenEmitUpdates(items: Product[], count: number) {
-    const user = this.auth.userSubject.getValue();
-    if (user) {
-      this.saveCart(items).subscribe((res: any) => {
-        this.emitUpdates(res.products);
+        if (!isPresent) {
+          mergedCart.push(item);
+        }
+      });
+      this.saveCartToDB(mergedCart).subscribe({
+        next: () => {
+          this.emitCartUpdates(mergedCart);
+        },
       });
     } else {
-      this.emitUpdates(items);
+      this.emitCartUpdates(items);
     }
   }
 
-  private emitUpdates(updatedItems: Product[]) {
-    const updatedCount = this.getCartItemsCount(updatedItems);
-    this.cartItemsCount.next(updatedCount);
-    this.cartItems.next(updatedItems.slice());
-    // Store the updated cart as JSON string in the local storage
-    localStorage.setItem('cart', JSON.stringify(updatedItems));
+  public fetchCart(userId: string) {
+    return this.http.get(this.baseUrl + userId);
   }
 
-  private getCartItemsCount(items: Product[]) {
-    const cartCount = items
-      .map((item) => item.quantity)
+  public clearLocalCart() {
+    localStorage.removeItem('cart');
+    this.emitCartUpdates([]);
+  }
+
+  public emitCartUpdates(items: Product[]) {
+    const products = items ? items.slice() : [];
+    const count = products
+      .map((i) => i.quantity)
       .reduce((q1, q2) => q1 + q2, 0);
-    return cartCount;
+    this.cartItems.next(products);
+    this.cartItemsCount.next(count);
   }
 
-  private saveCart(cartItems: Product[]): Observable<Cart> {
-    const user = this.auth.userSubject.getValue();
-    return this.http.post<Cart>('http://localhost:3000/api/cart', cartItems, {
-      headers: {
-        Authorization: `Bearer ${user.token}`,
-      },
-    });
+  private saveCartToDB(items: Product[]) {
+    return this.http.post(this.baseUrl, items);
   }
 }

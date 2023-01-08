@@ -10,6 +10,8 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrdersResolver } from './resolvers/orders.resolver';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AuthAdminGuard } from './guards/auth-admin.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -32,6 +34,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, AuthAdminGuard],
+  },
 ];
 
 @NgModule({

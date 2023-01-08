@@ -13,6 +13,7 @@ import { Cart } from 'src/app/models/cart.model';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   showsignupSuccess = false;
+  error: string = null;
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -39,22 +40,20 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
+    this.error = null;
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
     this.auth.login(email, password).subscribe({
       next: (res: Cart) => {
-        const localCart = localStorage.getItem('cart');
-        if (!localCart && res.products.length >= 1) {
-          // If cart is not present in local storage then emit the cart received from db(server)
-          this.cart.setCartAfterLogin(res.products);
+        if (res && res.products) {
+          this.cart.mergeCartAndSaveToDb(res.products);
         } else {
-          // If cart id present in local storage then save that to save and then emit updates
-          this.cart.saveCartToDb(JSON.parse(localStorage.getItem('cart')));
+          this.cart.mergeCartAndSaveToDb([]);
         }
         this.router.navigate(['/products']);
       },
       error: (err) => {
-        console.log(err);
+        this.error = err.error.error;
       },
     });
   }

@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription();
 
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
   constructor(
     private cartService: CartService,
     private auth: AuthService,
@@ -30,11 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.auth.userSubject.subscribe((user) => {
-        if (user) {
-          this.isLoggedIn = true;
-        } else {
-          this.isLoggedIn = false;
-        }
+        this.isLoggedIn = !!user;
+        this.isAdmin = !!user && user.isAdmin;
       })
     );
   }

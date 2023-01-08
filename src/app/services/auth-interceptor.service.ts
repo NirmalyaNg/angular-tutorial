@@ -16,10 +16,11 @@ export class AuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     if (
-      (req.url.includes('/auth') && !req.url.includes('/logout')) ||
+      (req.url.includes('/auth') &&
+        !req.url.includes('/logout') &&
+        !req.url.includes('/checkAdmin')) ||
       req.url.includes('/products') ||
-      req.url.includes('/categories') ||
-      req.url.includes('/cart')
+      req.url.includes('/categories')
     ) {
       return next.handle(req);
     }
