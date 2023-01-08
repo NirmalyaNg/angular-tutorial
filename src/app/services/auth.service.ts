@@ -1,17 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../models/auth-response.model';
-import {
-  BehaviorSubject,
-  Observable,
-  concatMap,
-  firstValueFrom,
-  tap,
-} from 'rxjs';
+import { BehaviorSubject, Observable, concatMap, tap } from 'rxjs';
 import { User } from '../models/user.model';
 import { CartService } from './cart.service';
 import { Cart } from '../models/cart.model';
-import { Product } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root',
