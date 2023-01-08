@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminActions } from 'src/app/services/admin-actions.service';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -10,15 +10,13 @@ export class AdminDashboardComponent implements OnInit {
   usersCount: number = 0;
   ordersCount: number = 0;
   income: number = 0;
-  constructor(private admin: AdminActions) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.admin.getDashBoardData().subscribe({
-      next: (data: any) => {
-        this.usersCount = data.users;
-        this.ordersCount = data.orders;
-        this.income = Math.round(data.income);
-      },
+    this.route.data.subscribe((data: Data) => {
+      this.usersCount = data.dashboard.users;
+      this.ordersCount = data.dashboard.orders;
+      this.income = Math.round(data.dashboard.income);
     });
   }
 }

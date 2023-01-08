@@ -12,6 +12,7 @@ import { OrdersResolver } from './resolvers/orders.resolver';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { AuthAdminGuard } from './guards/auth-admin.guard';
+import { DashboardResolver } from './resolvers/dashboard.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -38,6 +39,7 @@ const routes: Routes = [
     path: 'admin',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, AuthAdminGuard],
+    resolve: { dashboard: DashboardResolver },
   },
 ];
 
