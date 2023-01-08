@@ -93,7 +93,6 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'logout', null).pipe(
       tap(() => {
         localStorage.removeItem('authUser');
-        localStorage.removeItem('cart');
         this.cart.clearLocalCart();
         this.userSubject.next(null);
       })
