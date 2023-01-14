@@ -1,0 +1,104 @@
+<div class="card border-0 p-3">
+  <div class="card-body">
+    <h3 class="mb-4">ADD PRODUCT</h3>
+    <div class="row">
+      <div class="col-sm-12 col-xl-6">
+        <form
+          *ngIf="addProductForm"
+          [formGroup]="addProductForm"
+          (ngSubmit)="handleSubmit()"
+        >
+          <div class="form-group mb-2">
+            <label>Title</label>
+            <input type="text" class="form-control" formControlName="title" />
+          </div>
+          <p class="text-danger" *ngIf="isControlInvalidAndTouched('title')">
+            <span *ngIf="getControlErrors('title').required"
+              >Title is required</span
+            >
+            <span *ngIf="getControlErrors('title').minlength"
+              >Title should have min. 6 characters</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Description</label>
+            <textarea
+              type="text"
+              class="form-control"
+              style="resize: none"
+              formControlName="description"
+            ></textarea>
+          </div>
+          <p
+            class="text-danger"
+            *ngIf="isControlInvalidAndTouched('description')"
+          >
+            <span *ngIf="getControlErrors('description').required"
+              >Description is required</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Image URL</label>
+            <input type="text" class="form-control" formControlName="image" />
+          </div>
+          <p class="text-danger" *ngIf="isControlInvalidAndTouched('image')">
+            <span *ngIf="getControlErrors('image').required"
+              >Image is required</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Category</label>
+            <select class="form-select" formControlName="category">
+              <option value="{{ null }}" disabled>
+                Please Select a Category
+              </option>
+              <option
+                *ngFor="let category of categories"
+                value="{{ category }}"
+              >
+                {{ category }}
+              </option>
+            </select>
+          </div>
+          <p class="text-danger" *ngIf="isControlInvalidAndTouched('category')">
+            <span *ngIf="getControlErrors('category').required"
+              >Category is required</span
+            >
+          </p>
+          <div class="form-group mb-2">
+            <label>Price</label>
+            <input type="number" class="form-control" formControlName="price" />
+          </div>
+          <p class="text-danger" *ngIf="isControlInvalidAndTouched('price')">
+            <span *ngIf="getControlErrors('price').required"
+              >Price is required</span
+            >
+            <span *ngIf="getControlErrors('price').min"
+              >Price should be greater than 0</span
+            >
+          </p>
+          <div class="d-grid gap-2">
+            <button
+              class="btn btn-dark"
+              type="submit"
+              [disabled]="addProductForm.invalid"
+            >
+              Add Product
+            </button>
+          </div>
+        </form>
+      </div>
+      <div
+        class="col-sm-12 col-xl-5 offset-xl-1"
+        *ngIf="addProductForm?.value.image"
+      >
+        <h5 class="mb-4">IMAGE PREVIEW</h5>
+        <img
+          src="{{ addProductForm?.value.image }}"
+          alt="Product Image"
+          class="img-fluid"
+        />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Product } from '../models/product.model';
 import { Observable, lastValueFrom, map, tap } from 'rxjs';
 import { Category } from '../models/category.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +11,8 @@ import { Category } from '../models/category.model';
 export class ProductsService {
   private baseUrl = 'http://localhost:3000/api/';
   public loadedProducts: Product[] = [];
-  public loadedCategories: string[] = [];
-  constructor(private http: HttpClient) {}
+  public loadedCategories: Category[] = [];
+  constructor(private http: HttpClient, private auth: AuthService) {}
 
   public fetchProducts(): Promise<Product[]> {
     const products$ = this.http.get<Product[]>(this.baseUrl + 'products/').pipe(
@@ -22,13 +23,10 @@ export class ProductsService {
     return lastValueFrom(products$);
   }
 
-  public fetchCategories(): Promise<string[]> {
+  public fetchCategories(): Promise<Category[]> {
     const categories$ = this.http
       .get<Category[]>(this.baseUrl + 'categories')
       .pipe(
-        map((categories) => {
-          return categories.map((category) => category.name);
-        }),
         tap((categories) => {
           this.loadedCategories = categories;
         })
@@ -38,5 +36,13 @@ export class ProductsService {
 
   public fetchProduct(productId: number): Observable<Product> {
     return this.http.get<Product>(this.baseUrl + 'products/' + productId);
+  }
+
+  public addProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.baseUrl + 'products/', product, {
+      headers: new HttpHeaders({
+        Authorization: this.auth.userSubject.getValue().token,
+      }),
+    });
   }
 }

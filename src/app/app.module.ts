@@ -22,7 +22,14 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
 import { CheckoutBillingDetailsComponent } from './components/checkout/checkout-billing-details/checkout-billing-details.component';
 import { CheckoutCartDetailsComponent } from './components/checkout/checkout-cart-details/checkout-cart-details.component';
 import { OrdersComponent } from './components/orders/orders.component';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminSidebarComponent } from './components/admin/admin-sidebar/admin-sidebar.component';
+import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { AdminAddProductComponent } from './components/admin/admin-add-product/admin-add-product.component';
+import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
+import { AdminAddCategoryComponent } from './components/admin/admin-add-category/admin-add-category.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +50,14 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
     CheckoutBillingDetailsComponent,
     CheckoutCartDetailsComponent,
     OrdersComponent,
+    AdminComponent,
     AdminDashboardComponent,
+    AdminSidebarComponent,
+    AdminProductsComponent,
+    AdminUsersComponent,
+    AdminAddProductComponent,
+    AdminCategoriesComponent,
+    AdminAddCategoryComponent,
   ],
   imports: [
     BrowserModule,

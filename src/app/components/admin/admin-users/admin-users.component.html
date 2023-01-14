@@ -1,0 +1,38 @@
+<div class="card border-0">
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <th>Username</th>
+        <th>Email</th>
+        <th>IsAdmin</th>
+        <th>Actions</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <i class="fa-solid fa-check text-success" *ngIf="user.isAdmin"></i>
+            <i class="fa-solid fa-xmark text-danger" *ngIf="!user.isAdmin"></i>
+          </td>
+          <td>
+            <button
+              class="btn btn-sm btn-success"
+              *ngIf="!user.isAdmin"
+              (click)="onChangeIsAdmin(user._id, true)"
+            >
+              Make Admin
+            </button>
+            <button
+              *ngIf="user.isAdmin"
+              class="btn btn-sm btn-danger ms-2"
+              (click)="onChangeIsAdmin(user._id, false)"
+            >
+              Remove Admin
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

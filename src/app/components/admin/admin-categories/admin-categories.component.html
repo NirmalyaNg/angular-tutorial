@@ -1,0 +1,35 @@
+<div class="card border-0 p-3">
+  <div class="card-body">
+    <button class="btn btn-dark btn-sm mb-2" routerLink="add">
+      Add Category
+    </button>
+    <div class="row">
+      <div class="col-sm-12 col-xl-7">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let category of categories">
+              <td>{{ category.name }}</td>
+              <td>
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="handleCategoryDelete(category._id)"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-12 col-xl-5">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

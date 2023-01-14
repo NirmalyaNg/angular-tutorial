@@ -1,0 +1,19 @@
+<h4 class="mb-2 text-center">Add Category</h4>
+<form [formGroup]="addCategoryForm" (ngSubmit)="onSubmit()">
+  <div class="form-group mb-2">
+    <label>Category Name</label>
+    <input type="text" class="form-control" formControlName="name" />
+  </div>
+  <p class="text-danger" *ngIf="isControlInvalidAndTouched('name')">
+    <span *ngIf="getControlErrors('name').required">Name is required</span>
+  </p>
+  <div class="d-grid gap-2">
+    <button
+      class="btn btn-dark mt-2"
+      type="submit"
+      [disabled]="addCategoryForm.invalid"
+    >
+      Add Category
+    </button>
+  </div>
+</form>

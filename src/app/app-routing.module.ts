@@ -10,9 +10,15 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { OrdersResolver } from './resolvers/orders.resolver';
 import { AuthGuard } from './guards/auth.guard';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { AdminComponent } from './components/admin/admin.component';
 import { AuthAdminGuard } from './guards/auth-admin.guard';
 import { DashboardResolver } from './resolvers/dashboard.resolver';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminProductsComponent } from './components/admin/admin-products/admin-products.component';
+import { AdminUsersComponent } from './components/admin/admin-users/admin-users.component';
+import { AdminAddProductComponent } from './components/admin/admin-add-product/admin-add-product.component';
+import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
+import { AdminAddCategoryComponent } from './components/admin/admin-add-category/admin-add-category.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -37,9 +43,24 @@ const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] },
   {
     path: 'admin',
-    component: AdminDashboardComponent,
+    component: AdminComponent,
     canActivate: [AuthGuard, AuthAdminGuard],
-    resolve: { dashboard: DashboardResolver },
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
+      {
+        path: 'dashboard',
+        component: AdminDashboardComponent,
+        resolve: { dashboard: DashboardResolver },
+      },
+      { path: 'products', component: AdminProductsComponent },
+      { path: 'users', component: AdminUsersComponent },
+      {
+        path: 'categories',
+        component: AdminCategoriesComponent,
+        children: [{ path: 'add', component: AdminAddCategoryComponent }],
+      },
+      { path: 'add-product', component: AdminAddProductComponent },
+    ],
   },
 ];
 

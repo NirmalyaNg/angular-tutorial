@@ -21,7 +21,9 @@ export class ProductsComponent implements OnInit {
       this.productsService.loadedCategories.length > 0
     ) {
       this.products = this.productsService.loadedProducts;
-      this.categories = this.productsService.loadedCategories;
+      this.categories = this.productsService.loadedCategories.map(
+        (c) => c.name
+      );
       return;
     }
     this.isFetching = true;
@@ -32,7 +34,7 @@ export class ProductsComponent implements OnInit {
         return this.productsService.fetchCategories();
       })
       .then((categories) => {
-        this.categories = categories;
+        this.categories = categories.map((c) => c.name);
         this.isFetching = false;
       })
       .catch((err) => {

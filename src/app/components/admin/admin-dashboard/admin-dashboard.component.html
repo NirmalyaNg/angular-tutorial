@@ -1,0 +1,42 @@
+<h4>Dashboard</h4>
+<div class="row">
+  <div class="col-sm-12 col-xl-4">
+    <div class="card border-0 p-3 bg-success">
+      <div class="card-body d-flex align-items-center">
+        <div class="icon me-3">
+          <i class="fa-solid fa-users me-3"></i>
+        </div>
+        <div class="content text-white">
+          <h6 class="mt-2">Users</h6>
+          <p class="count">{{ usersCount }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-xl-4">
+    <div class="card border-0 p-3 bg-warning">
+      <div class="card-body d-flex align-items-center">
+        <div class="icon me-3">
+          <i class="fa-solid fa-list me-3"></i>
+        </div>
+        <div class="content text-white">
+          <h6 class="mt-2">Orders</h6>
+          <p class="count">{{ ordersCount }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-xl-4">
+    <div class="card border-0 p-3 bg-danger">
+      <div class="card-body d-flex align-items-center">
+        <div class="icon me-3">
+          <i class="fa-solid fa-sack-dollar me-3"></i>
+        </div>
+        <div class="content text-white">
+          <h6 class="mt-2">Income</h6>
+          <p class="count">₹ {{ income }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
