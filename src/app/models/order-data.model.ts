@@ -3,7 +3,13 @@ export interface OrderData {
   _id?: string;
   username: string;
   email: string;
-  products: { productId: string; quantity: number; title: string }[];
+  products: {
+    image: string;
+    productId: string;
+    quantity: number;
+    title: string;
+    price: number;
+  }[];
   amount: number;
   address: {
     line: string;
@@ -13,4 +19,6 @@ export interface OrderData {
     pincode: string;
   };
   status?: string;
+  createdAt?: string;
+  updatedAt?: string;
 }

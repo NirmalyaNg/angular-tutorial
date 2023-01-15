@@ -19,6 +19,9 @@ import { AdminUsersComponent } from './components/admin/admin-users/admin-users.
 import { AdminAddProductComponent } from './components/admin/admin-add-product/admin-add-product.component';
 import { AdminCategoriesComponent } from './components/admin/admin-categories/admin-categories.component';
 import { AdminAddCategoryComponent } from './components/admin/admin-add-category/admin-add-category.component';
+import { AdminOrdersComponent } from './components/admin/admin-orders/admin-orders.component';
+import { AdminViewOrderComponent } from './components/admin/admin-view-order/admin-view-order.component';
+import { OrderResolver } from './resolvers/order.resolver';
 
 const routes: Routes = [
   { path: '', redirectTo: 'products', pathMatch: 'full' },
@@ -60,6 +63,12 @@ const routes: Routes = [
         children: [{ path: 'add', component: AdminAddCategoryComponent }],
       },
       { path: 'add-product', component: AdminAddProductComponent },
+      { path: 'orders', component: AdminOrdersComponent },
+      {
+        path: 'orders/:id',
+        component: AdminViewOrderComponent,
+        resolve: { order: OrderResolver },
+      },
     ],
   },
 ];

@@ -21,6 +21,20 @@ export class OrderService {
 
   public fetchOrders(): Observable<OrderData[]> {
     const userId = this.auth.userSubject.getValue().id;
-    return this.http.get<OrderData[]>(this.baseUrl + userId);
+    return this.http.get<OrderData[]>(this.baseUrl + 'user/' + userId);
+  }
+
+  public fetchAllOrders(): Observable<OrderData[]> {
+    return this.http.get<OrderData[]>(this.baseUrl);
+  }
+
+  public fetchOrder(id: string): Observable<OrderData> {
+    return this.http.get<OrderData>(this.baseUrl + id);
+  }
+
+  public confirmOrder(id: string): Observable<OrderData> {
+    return this.http.patch<OrderData>(this.baseUrl + id, {
+      status: 'confirmed',
+    });
   }
 }

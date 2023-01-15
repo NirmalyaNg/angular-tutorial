@@ -25,15 +25,18 @@ export class AdminCategoriesComponent implements OnInit {
     }
   }
 
-  public handleCategoryDelete(id: string) {
+  public handleCategoryDelete(category: Category) {
     const choice = confirm('Are you sure you want to delete this category ?');
     if (choice) {
-      this.category.deleteCategory(id).subscribe({
+      this.category.deleteCategory(category._id).subscribe({
         next: () => {
           const index = this.product.loadedCategories.findIndex(
-            (c) => c._id === id
+            (c) => c._id === category._id
           );
           this.product.loadedCategories.splice(index, 1);
+          this.product.loadedProducts = this.product.loadedProducts.filter(
+            (p) => p.category !== category.name
+          );
         },
       });
     }

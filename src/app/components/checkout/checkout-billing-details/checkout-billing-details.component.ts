@@ -130,6 +130,8 @@ export class CheckoutBillingDetailsComponent implements OnInit, OnDestroy {
         productId: item._id,
         quantity: item.quantity,
         title: item.title,
+        image: item.image,
+        price: item.price,
       })),
       address: {
         city: res.shipping.address.city,

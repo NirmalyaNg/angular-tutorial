@@ -1,0 +1,30 @@
+<div class="card border-0">
+  <div class="card-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>View Order</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders">
+          <td>{{ order.username }}</td>
+          <td>{{ order.email }}</td>
+          <td>₹ {{ order.amount }}</td>
+          <td>{{ order.status }}</td>
+          <td>
+            <i
+              class="fa-solid fa-eye ms-4"
+              style="cursor: pointer"
+              [routerLink]="[order._id]"
+            ></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
